@@ -1,0 +1,600 @@
+[
+  {
+    "id": 1,
+    "name": "Midnight Silk-Wool Evening Tuxedo",
+    "category": "Blazers and Suits",
+    "price": 145000,
+    "image": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=1200&q=80",
+    "description": "Crafted from an exquisite 280g Italian silk-wool blend with hand-stitched grosgrain shawl lapels. Designed with canvassed construction for an impeccable silhouette, paired with flat-front silk-striped trousers.",
+    "sizes": ["38R", "40R", "42R", "44R"],
+    "colors": [
+      { "name": "Midnight Navy", "hex": "#0D1B2A" },
+      { "name": "Imperial Black", "hex": "#111111" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 38,
+    "stockStatus": "Only 3 tailored sets in Atelier",
+    "tag": "ATELIER EXCLUSIVE",
+    "badge": "ATELIER EXCLUSIVE",
+    "collection": "exclusive"
+  },
+  {
+    "id": 2,
+    "name": "Bespoke Glen Plaid Wool Blazer",
+    "category": "Blazers and Suits",
+    "price": 89000,
+    "image": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80",
+    "description": "Tailored in Biella, Italy using super 150s virgin wool. Features a softly structured shoulder, horn buttons, double vent, and genuine Bemberg silk lining.",
+    "sizes": ["38R", "40R", "42R", "44R"],
+    "colors": [
+      { "name": "Charcoal Grey Plaid", "hex": "#2B2B2B" },
+      { "name": "Sand Glen Plaid", "hex": "#8A847A" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 42,
+    "stockStatus": "In Stock",
+    "tag": "HERITAGE",
+    "badge": "HERITAGE",
+    "collection": "featured"
+  },
+  {
+    "id": 3,
+    "name": "Double-Breasted Mongolian Cashmere Overcoat",
+    "category": "Jackets",
+    "price": 125000,
+    "image": "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=1200&q=80",
+    "description": "Woven from 100% pure Grade-A Mongolian cashmere with water-repellent finish. Features peak lapels, genuine horn buttons, and deep welt pockets.",
+    "sizes": ["38R", "40R", "42R", "44R"],
+    "colors": [
+      { "name": "Camel Warm Beige", "hex": "#BFA588" },
+      { "name": "Onyx Black", "hex": "#121212" }
+    ],
+    "rating": 5.0,
+    "reviewCount": 29,
+    "stockStatus": "In Stock",
+    "tag": "NEW SEASON",
+    "badge": "NEW SEASON",
+    "collection": "new"
+  },
+  {
+    "id": 4,
+    "name": "Hand-Burnished Calfskin Suede Bomber",
+    "category": "Jackets",
+    "price": 98000,
+    "image": "https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?auto=format&fit=crop&w=1200&q=80",
+    "description": "Sourced from premier Tuscan tanneries, velvety soft calf suede with custom gold-plated RiRi zips and rib-knit cashmere trims.",
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      { "name": "Cognac Brown", "hex": "#6D3B17" },
+      { "name": "Olive Slate", "hex": "#3E4437" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 54,
+    "stockStatus": "In Stock",
+    "tag": "BESTSELLER",
+    "badge": "BESTSELLER",
+    "collection": "bestseller"
+  },
+  {
+    "id": 5,
+    "name": "Italian Nappa Leather Biker Jacket",
+    "category": "Jackets",
+    "price": 115000,
+    "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1200&q=80",
+    "description": "Buttery soft full-grain lamb nappa leather jacket with asymmetric closure, polished gunmetal hardware, and quilted silk lining.",
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      { "name": "Deep Jet Black", "hex": "#0F0F0F" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 61,
+    "stockStatus": "Only 2 left",
+    "tag": "LIMITED",
+    "badge": "LIMITED",
+    "collection": "exclusive"
+  },
+  {
+    "id": 6,
+    "name": "Mulberry Silk-Cotton Evening Shirt",
+    "category": "Premium Shirts",
+    "price": 28500,
+    "image": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=1200&q=80",
+    "description": "Woven with 40% Mulberry silk and 60% Giza Egyptian cotton. Boasts a concealed mother-of-pearl button placket and sculpted French cuffs.",
+    "sizes": ["39", "40", "41", "42", "43"],
+    "colors": [
+      { "name": "Crisp Ivory", "hex": "#F8F6F0" },
+      { "name": "Midnight Noir", "hex": "#151515" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 47,
+    "stockStatus": "In Stock",
+    "tag": "BESTSELLER",
+    "badge": "BESTSELLER",
+    "collection": "bestseller"
+  },
+  {
+    "id": 7,
+    "name": "Sartorial Poplin Mandarin Collar Shirt",
+    "category": "Premium Shirts",
+    "price": 22000,
+    "image": "https://images.unsplash.com/photo-1620012253295-c15c429fccf8?auto=format&fit=crop&w=1200&q=80",
+    "description": "Constructed from 200/2 two-ply sea island cotton. Finished with subtle tonal embroidery at the hem and handcrafted Australian mother-of-pearl buttons.",
+    "sizes": ["39", "40", "41", "42", "43"],
+    "colors": [
+      { "name": "Chalk White", "hex": "#FFFFFF" },
+      { "name": "Sky Blue Fine Stripe", "hex": "#C2D5E8" }
+    ],
+    "rating": 4.7,
+    "reviewCount": 33,
+    "stockStatus": "In Stock",
+    "tag": "NEW",
+    "badge": "NEW",
+    "collection": "new"
+  },
+  {
+    "id": 8,
+    "name": "Tailored Bengal Stripe Royal Oxford Shirt",
+    "category": "Premium Shirts",
+    "price": 24500,
+    "image": "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?auto=format&fit=crop&w=1200&q=80",
+    "description": "Woven on vintage shuttle looms in Naples. Offers a semi-spread collar, split back yoke for effortless movement, and reinforced side gussets.",
+    "sizes": ["39", "40", "41", "42", "43"],
+    "colors": [
+      { "name": "Navy & White Stripe", "hex": "#1B3047" },
+      { "name": "Espresso Stripe", "hex": "#42281D" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 39,
+    "stockStatus": "In Stock",
+    "tag": "ESSENTIAL",
+    "badge": "ESSENTIAL",
+    "collection": "featured"
+  },
+  {
+    "id": 9,
+    "name": "Mercerized Heavyweight Supima Crewneck",
+    "category": "Luxury T-Shirts",
+    "price": 12500,
+    "image": "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?auto=format&fit=crop&w=1200&q=80",
+    "description": "Double-mercerized 260gsm long-staple Supima cotton for an ethereal luster and silk-like drape. Preshrunk with double-needle ribbed collar.",
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "colors": [
+      { "name": "Pitch Black", "hex": "#111111" },
+      { "name": "Raw Ecru", "hex": "#EFECE4" },
+      { "name": "Charcoal Slate", "hex": "#2E2E2E" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 88,
+    "stockStatus": "In Stock",
+    "tag": "BESTSELLER",
+    "badge": "BESTSELLER",
+    "collection": "bestseller"
+  },
+  {
+    "id": 10,
+    "name": "Cashmere-Silk Knit Long Sleeve Henley",
+    "category": "Luxury T-Shirts",
+    "price": 26000,
+    "image": "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=1200&q=80",
+    "description": "Seamless 18-gauge knit blend of 70% Mongolian cashmere and 30% Mulberry silk. Features a four-button genuine horn placket.",
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      { "name": "Sand Dune", "hex": "#D3C2AC" },
+      { "name": "Deep Forest", "hex": "#1E2B22" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 31,
+    "stockStatus": "Only 4 left",
+    "tag": "HERITAGE",
+    "badge": "HERITAGE",
+    "collection": "featured"
+  },
+  {
+    "id": 11,
+    "name": "Extra-Fine Merino Silk Knit Sweater",
+    "category": "Luxury T-Shirts",
+    "price": 32000,
+    "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=1200&q=80",
+    "description": "Spun from 15.5 micron Australian Merino wool blended with high-twist silk yarns. Thermal regulating, ultra-lightweight, and luxuriously soft against skin.",
+    "sizes": ["S", "M", "L", "XL"],
+    "colors": [
+      { "name": "Warm Taupe", "hex": "#8C7C6D" },
+      { "name": "Midnight Ink", "hex": "#101820" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 26,
+    "stockStatus": "In Stock",
+    "tag": "NEW",
+    "badge": "NEW",
+    "collection": "new"
+  },
+  {
+    "id": 12,
+    "name": "Double-Pleated Sartorial Wool Flannel Trousers",
+    "category": "Trousers",
+    "price": 38000,
+    "image": "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=1200&q=80",
+    "description": "Classic English flannel tailored with deep double forward pleats, high-rise waist, side buckle adjusters, and a generous 2-inch cuff.",
+    "sizes": ["30", "32", "34", "36"],
+    "colors": [
+      { "name": "Mid Grey Melange", "hex": "#4D4D4D" },
+      { "name": "Navy Blue", "hex": "#1B263B" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 44,
+    "stockStatus": "In Stock",
+    "tag": "ATELIER",
+    "badge": "ATELIER",
+    "collection": "featured"
+  },
+  {
+    "id": 13,
+    "name": "Sartorial High-Waist Gurkha Trousers",
+    "category": "Trousers",
+    "price": 34000,
+    "image": "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?auto=format&fit=crop&w=1200&q=80",
+    "description": "Handcrafted from Irish heavy linen with traditional dual-buckle Gurkha fastening. Offers effortless breathability and relaxed elegance.",
+    "sizes": ["30", "32", "34", "36"],
+    "colors": [
+      { "name": "Desert Khaki", "hex": "#C2B280" },
+      { "name": "Ivory Cream", "hex": "#FAF6EE" }
+    ],
+    "rating": 4.7,
+    "reviewCount": 35,
+    "stockStatus": "In Stock",
+    "tag": "NEW SEASON",
+    "badge": "NEW SEASON",
+    "collection": "new"
+  },
+  {
+    "id": 14,
+    "name": "Kurabo Japanese Selvedge Raw Denim",
+    "category": "Denim",
+    "price": 36000,
+    "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=1200&q=80",
+    "description": "14.5oz unwashed virgin selvedge denim woven on heritage Toyoda shuttle looms in Okayama, Japan. Features pink line selvedge ID and solid brass rivets.",
+    "sizes": ["30", "32", "34", "36"],
+    "colors": [
+      { "name": "Deep Indigo Raw", "hex": "#1A2536" }
+    ],
+    "rating": 5.0,
+    "reviewCount": 58,
+    "stockStatus": "In Stock",
+    "tag": "BESTSELLER",
+    "badge": "BESTSELLER",
+    "collection": "bestseller"
+  },
+  {
+    "id": 15,
+    "name": "Tapered Vintage Hand-Wash Selvedge Jeans",
+    "category": "Denim",
+    "price": 32500,
+    "image": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=1200&q=80",
+    "description": "Gently hand-distressed in Kojima to replicate five years of natural patina. Finished with vegetable-tanned leather waistband patch and button fly.",
+    "sizes": ["30", "32", "34", "36"],
+    "colors": [
+      { "name": "Faded Stone Blue", "hex": "#506A82" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 29,
+    "stockStatus": "In Stock",
+    "tag": "HERITAGE",
+    "badge": "HERITAGE",
+    "collection": "featured"
+  },
+  {
+    "id": 16,
+    "name": "Calfskin Minimalist Low-Top Sneakers",
+    "category": "Sneakers",
+    "price": 42000,
+    "image": "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=1200&q=80",
+    "description": "Sculpted from butter-soft Italian full-grain nappa leather. Features Margom rubber cupsole, gold-leaf stamped serial numbers, and calfskin leather lining.",
+    "sizes": ["40", "41", "42", "43", "44", "45"],
+    "colors": [
+      { "name": "Pure White", "hex": "#FFFFFF" },
+      { "name": "Onyx Black", "hex": "#111111" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 92,
+    "stockStatus": "In Stock",
+    "tag": "BESTSELLER",
+    "badge": "BESTSELLER",
+    "collection": "bestseller"
+  },
+  {
+    "id": 17,
+    "name": "Atelier Luxury Runner in Suede & Nappa",
+    "category": "Sneakers",
+    "price": 49000,
+    "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=1200&q=80",
+    "description": "A sophisticated fusion of calfskin suede, perforated leather, and ultralight Vibram lugged soles. Engineered for daylong city comfort with runway flair.",
+    "sizes": ["40", "41", "42", "43", "44", "45"],
+    "colors": [
+      { "name": "Champagne & Stone", "hex": "#D6C7B2" },
+      { "name": "Triple Noir", "hex": "#171717" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 37,
+    "stockStatus": "Only 3 left",
+    "tag": "NEW",
+    "badge": "NEW",
+    "collection": "new"
+  },
+  {
+    "id": 18,
+    "name": "Hand-Burnished Wholecut Oxford Shoes",
+    "category": "Formal Shoes",
+    "price": 68000,
+    "image": "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=1200&q=80",
+    "description": "Crafted from a single flawless cut of French calfskin with Goodyear-welted closed-channel oak-bark leather soles. Masterfully hand-patinated in Parma.",
+    "sizes": ["40", "41", "42", "43", "44"],
+    "colors": [
+      { "name": "Burnished Mahogany", "hex": "#4A2718" },
+      { "name": "Imperial Black", "hex": "#0D0D0D" }
+    ],
+    "rating": 5.0,
+    "reviewCount": 46,
+    "stockStatus": "In Stock",
+    "tag": "ATELIER EXCLUSIVE",
+    "badge": "ATELIER EXCLUSIVE",
+    "collection": "exclusive"
+  },
+  {
+    "id": 19,
+    "name": "Goodyear-Welted Double Monkstrap Shoes",
+    "category": "Formal Shoes",
+    "price": 64000,
+    "image": "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=1200&q=80",
+    "description": "Handmade in Northamptonshire with full-grain calf leather and polished champagne-gold buckle closures. Beveled waist and fiddleback sole detailing.",
+    "sizes": ["40", "41", "42", "43", "44"],
+    "colors": [
+      { "name": "Deep Chestnut", "hex": "#3A2118" },
+      { "name": "Obsidian Black", "hex": "#141414" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 38,
+    "stockStatus": "In Stock",
+    "tag": "HERITAGE",
+    "badge": "HERITAGE",
+    "collection": "featured"
+  },
+  {
+    "id": 20,
+    "name": "Embroidered Silk Velvet Evening Slippers",
+    "category": "Formal Shoes",
+    "price": 54000,
+    "image": "https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?auto=format&fit=crop&w=1200&q=80",
+    "description": "Pure cotton-silk velvet upper with hand-embroidered bullion gold thread crest. Quilted satin lining and soft leather sole for black-tie soirees.",
+    "sizes": ["40", "41", "42", "43", "44"],
+    "colors": [
+      { "name": "Midnight Velvet", "hex": "#0C1322" },
+      { "name": "Bordeaux Wine", "hex": "#471018" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 21,
+    "stockStatus": "Only 2 pairs",
+    "tag": "LIMITED",
+    "badge": "LIMITED",
+    "collection": "exclusive"
+  },
+  {
+    "id": 21,
+    "name": "Chronographe Royal 18k Rose Gold Watch",
+    "category": "Luxury Watches",
+    "price": 185000,
+    "image": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80",
+    "description": "Swiss-made automatic chronograph with 72-hour power reserve. Encased in solid 18k rose gold with an ivory sunray dial, sapphire crystal, and Louisiana alligator strap.",
+    "sizes": ["41mm Case"],
+    "colors": [
+      { "name": "Rose Gold & Ivory", "hex": "#C59B74" }
+    ],
+    "rating": 5.0,
+    "reviewCount": 18,
+    "stockStatus": "Numbered Atelier Piece (04/25)",
+    "tag": "HAUTE HORLOGERIE",
+    "badge": "HAUTE HORLOGERIE",
+    "collection": "exclusive"
+  },
+  {
+    "id": 22,
+    "name": "Grand Complication Skeleton Mechanical Timepiece",
+    "category": "Luxury Watches",
+    "price": 165000,
+    "image": "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=1200&q=80",
+    "description": "Hand-wound skeletonized caliber displaying Côtes de Genève finishes and blued steel screws through double anti-reflective sapphire glass. Polished titanium bezel.",
+    "sizes": ["42mm Case"],
+    "colors": [
+      { "name": "Brushed Titanium & Gunmetal", "hex": "#4A4D52" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 24,
+    "stockStatus": "In Stock",
+    "tag": "MASTERPIECE",
+    "badge": "MASTERPIECE",
+    "collection": "bestseller"
+  },
+  {
+    "id": 23,
+    "name": "Full-Grain Leather Bifold Wallet with Gold Foil",
+    "category": "Leather Wallets",
+    "price": 18500,
+    "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=1200&q=80",
+    "description": "Vegetable-tanned French box calf leather with eight card slots, dual note compartments, and subtle 24k gold leaf hot-stamped Atelier monogram.",
+    "sizes": ["One Size"],
+    "colors": [
+      { "name": "Ebony Black", "hex": "#111111" },
+      { "name": "Caramel Cognac", "hex": "#7A431D" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 73,
+    "stockStatus": "In Stock",
+    "tag": "BESTSELLER",
+    "badge": "BESTSELLER",
+    "collection": "bestseller"
+  },
+  {
+    "id": 24,
+    "name": "Saffiano Calfskin Zip Travel Organizer",
+    "category": "Leather Wallets",
+    "price": 28000,
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=80",
+    "description": "Scratch-resistant cross-grain Saffiano leather wallet with zippered compartment for passport, boarding passes, currency, and SIM card ejector slot.",
+    "sizes": ["One Size"],
+    "colors": [
+      { "name": "Midnight Blue", "hex": "#14213D" },
+      { "name": "Smoked Charcoal", "hex": "#2B2D42" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 39,
+    "stockStatus": "In Stock",
+    "tag": "TRAVEL",
+    "badge": "TRAVEL",
+    "collection": "featured"
+  },
+  {
+    "id": 25,
+    "name": "Reversible Tuscan Leather Belt with Brushed Brass",
+    "category": "Belts",
+    "price": 21500,
+    "image": "https://images.unsplash.com/photo-1624222247344-550fb60583dc?auto=format&fit=crop&w=1200&q=80",
+    "description": "Reversible 34mm wide belt offering smooth black French calfskin on one side and rich tan grain leather on the reverse. Solid brass swivel buckle.",
+    "sizes": ["85cm (32)", "90cm (34)", "95cm (36)", "100cm (38)"],
+    "colors": [
+      { "name": "Black / Cognac Tan", "hex": "#1E1E1E" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 64,
+    "stockStatus": "In Stock",
+    "tag": "BESTSELLER",
+    "badge": "BESTSELLER",
+    "collection": "bestseller"
+  },
+  {
+    "id": 26,
+    "name": "Hand-Braided Bridle Leather Dress Belt",
+    "category": "Belts",
+    "price": 19000,
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=1200&q=80",
+    "description": "Woven by hand in Florence using English bridle leather strips. Features a hand-sewn leather keeper and satin-finished palladium buckle.",
+    "sizes": ["85cm (32)", "90cm (34)", "95cm (36)", "100cm (38)"],
+    "colors": [
+      { "name": "Dark Walnut", "hex": "#402619" }
+    ],
+    "rating": 4.7,
+    "reviewCount": 28,
+    "stockStatus": "In Stock",
+    "tag": "NEW",
+    "badge": "NEW",
+    "collection": "new"
+  },
+  {
+    "id": 27,
+    "name": "Bold Square Acetate Sunglasses in Tortoise",
+    "category": "Sunglasses",
+    "price": 28500,
+    "image": "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=80",
+    "description": "Hand-milled 8mm thick Japanese acetate frames with 24k gold-plated hinges and Carl Zeiss polarized green lenses offering 100% UV400 protection.",
+    "sizes": ["52-20-145"],
+    "colors": [
+      { "name": "Vintage Havana Tortoise", "hex": "#5E3B20" },
+      { "name": "Gloss Obsidian", "hex": "#0F0F0F" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 51,
+    "stockStatus": "In Stock",
+    "tag": "HERITAGE",
+    "badge": "HERITAGE",
+    "collection": "featured"
+  },
+  {
+    "id": 28,
+    "name": "Titanium Aviator Sunglasses with Gold Accents",
+    "category": "Sunglasses",
+    "price": 34000,
+    "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=1200&q=80",
+    "description": "Ultra-lightweight aerospace-grade Japanese titanium navigator silhouette with engraved filigree temples and warm amber gradient polarized lenses.",
+    "sizes": ["58-15-140"],
+    "colors": [
+      { "name": "Brushed Champagne Gold", "hex": "#D4AF37" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 33,
+    "stockStatus": "Only 3 left",
+    "tag": "LIMITED",
+    "badge": "LIMITED",
+    "collection": "exclusive"
+  },
+  {
+    "id": 29,
+    "name": "Oud Royale Extrait de Parfum (100ml)",
+    "category": "Perfumes",
+    "price": 31000,
+    "image": "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=1200&q=80",
+    "description": "An opulent concoction of rare 30-year wild Cambodian agarwood, Taif rose, smoked birch tar, ambergris, and warm tonka bean. 35% perfume oil concentration.",
+    "sizes": ["100ml Flacon"],
+    "colors": [
+      { "name": "Smoked Glass & Gold", "hex": "#1A1713" }
+    ],
+    "rating": 5.0,
+    "reviewCount": 82,
+    "stockStatus": "In Stock",
+    "tag": "SIGNATURE",
+    "badge": "SIGNATURE",
+    "collection": "bestseller"
+  },
+  {
+    "id": 30,
+    "name": "Santal Noir & Haitian Vetiver Eau de Parfum (100ml)",
+    "category": "Perfumes",
+    "price": 26500,
+    "image": "https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=1200&q=80",
+    "description": "Crisp Italian bergamot and cardamom transitioning into smoky Haitian vetiver, Mysore sandalwood, and dry Virginia cedarwood.",
+    "sizes": ["100ml Flacon"],
+    "colors": [
+      { "name": "Heavy Crystal Flacon", "hex": "#4D4238" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 49,
+    "stockStatus": "In Stock",
+    "tag": "NEW",
+    "badge": "NEW",
+    "collection": "new"
+  },
+  {
+    "id": 31,
+    "name": "Solid 925 Sterling Silver & Black Onyx Cufflinks",
+    "category": "Premium Accessories",
+    "price": 24000,
+    "image": "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1200&q=80",
+    "description": "Hand-chiseled from solid British 925 hallmarked sterling silver inlaid with faceted natural black onyx stones. Finished with whaleback toggle closure.",
+    "sizes": ["One Size"],
+    "colors": [
+      { "name": "Silver & Onyx", "hex": "#C0C0C0" }
+    ],
+    "rating": 4.9,
+    "reviewCount": 35,
+    "stockStatus": "In Stock",
+    "tag": "ATELIER",
+    "badge": "ATELIER",
+    "collection": "featured"
+  },
+  {
+    "id": 32,
+    "name": "Hand-Rolled Silk Twill Pocket Square",
+    "category": "Premium Accessories",
+    "price": 9500,
+    "image": "https://images.unsplash.com/photo-1589756033837-83eb26c927b5?auto=format&fit=crop&w=1200&q=80",
+    "description": "100% heavyweight 16-momme silk twill printed in Lake Como with historic baroque botanical motifs. Expertly hand-rolled and hand-sewn edges.",
+    "sizes": ["42cm x 42cm"],
+    "colors": [
+      { "name": "Gold & Navy Baroque", "hex": "#B89758" },
+      { "name": "Burgundy Geometric", "hex": "#611C28" }
+    ],
+    "rating": 4.8,
+    "reviewCount": 41,
+    "stockStatus": "In Stock",
+    "tag": "ESSENTIAL",
+    "badge": "ESSENTIAL",
+    "collection": "new"
+  }
+]

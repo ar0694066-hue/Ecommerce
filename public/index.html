@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="THREADLINE ATELIER — Haute Couture & Ready-to-Wear Luxury Men's Fashion. Tailored suits, fine knitwear, leather goods, footwear and haute horlogerie.">
+  <title>THREADLINE ATELIER — Luxury Men's Fashion & Haute Tailoring</title>
+  
+  <!-- Google Fonts: Playfair Display + Montserrat + Cormorant Garamond -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+  
+  <!-- Razorpay Checkout SDK -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- 1. Luxury Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="announcement-content">
+      <span>COMPLIMENTARY WHITE-GLOVE COURIER ON ORDERS OVER ₹15,000</span>
+      <span class="announcement-separator">✦</span>
+      <span>PRIVATE CLIENT CONCIERGE: +91 (0) 22 8900 4000</span>
+      <span class="announcement-separator">✦</span>
+      <span>BESPOKE TAILORING APPOINTMENTS AVAILABLE IN MUMBAI & DELHI</span>
+    </div>
+  </div>
+
+  <!-- 2. Premium Two-Tier Luxury Navigation Bar (Gucci & LV Structure) -->
+  <header class="luxury-header" id="header">
+    <!-- Top Row: Utility & Grand Centered Logo -->
+    <div class="header-top-row">
+      <div class="header-top-left">
+        <button class="nav-toggle" id="menuToggle" aria-label="Toggle Menu">
+          <span></span><span></span>
+        </button>
+                <button class="action-btn voice-nav-btn" id="voiceNavBtn" type="button" aria-label="Voice Search and Command" title="Speak to Search or Navigate">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+          <span class="action-label">VOICE</span>
+        </button>
+        <button class="action-btn" id="searchToggle" aria-label="Search Collection">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span class="action-label">SEARCH</span>
+        </button>
+      </div>
+
+      <!-- Grand Center Logo with Clear Breathing Space -->
+      <a class="brand-logo" href="#">
+        <span class="logo-title">THREADLINE</span>
+        <span class="logo-subtitle">ATELIER</span>
+      </a>
+
+      <!-- Right Action Icons -->
+      <div class="header-top-right">
+        <button class="action-btn" id="wishlistToggle" aria-label="Saved Wishlist">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          <span class="action-label">WISHLIST</span>
+          <span class="badge-count" id="wishlistCount">0</span>
+        </button>
+
+        <button class="action-btn" id="cartOpen" aria-label="Shopping Bag">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span class="action-label">BAG</span>
+          <span class="badge-count" id="cartCount">0</span>
+        </button>
+
+        <button class="action-btn" id="loginToggle" aria-label="Client Sign In">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span class="action-label" id="userStatusLabel">SIGN IN</span>
+        </button>
+
+        <button class="action-btn" id="ordersToggle" aria-label="Client Orders">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <span class="action-label">ORDERS</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Row: Centered Editorial Category Navigation -->
+    <nav class="header-nav-row" id="desktopNav">
+      <div class="nav-links-wrap">
+        <a href="#new" class="nav-link">NEW ARRIVALS</a>
+        <a href="#featured" class="nav-link" data-cat-filter="Blazers and Suits">TAILORING</a>
+        <a href="#featured" class="nav-link" data-cat-filter="Jackets">READY-TO-WEAR</a>
+        <a href="#footwear" class="nav-link">FOOTWEAR</a>
+        <a href="#accessories" class="nav-link">ACCESSORIES</a>
+        <a href="#exclusive" class="nav-link">CAPSULE</a>
+        <a href="#editorial" class="nav-link">ATELIER CRAFT</a>
+        <a href="#membership" class="nav-link nav-link-gold" id="membershipNavLink">MEMBERSHIP PRIVÉ</a>
+
+      </div>
+    </nav>
+  </header>
+
+  <!-- Interactive Search Bar Overlay -->
+  <div class="search-overlay hidden" id="searchOverlay">
+    <div class="search-overlay-inner">
+      <div class="search-input-wrap">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input id="searchInput" type="search" placeholder="Search bespoke tailoring, cashmere, footwear, fragrances..." autocomplete="off">
+        <button id="searchClose" class="search-close-btn" aria-label="Close Search">✕</button>
+      </div>
+      <div class="search-quick-tags">
+        <span>TRENDING:</span>
+        <button class="quick-tag" data-search="Tuxedo">Evening Tuxedo</button>
+        <button class="quick-tag" data-search="Cashmere">Mongolian Cashmere</button>
+        <button class="quick-tag" data-search="Watch">Haute Horlogerie</button>
+        <button class="quick-tag" data-search="Oxford">Oxford Shoes</button>
+        <button class="quick-tag" data-search="Oud">Oud Royale</button>
+      </div>
+      <div class="search-results-preview" id="searchResultsPreview"></div>
+    </div>
+  </div>
+
+  <main>
+    <!-- 3. Large Cinematic Hero Banner -->
+    <section class="cinematic-hero">
+      <div class="hero-media-wrapper">
+        <img class="hero-bg-image" src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=2400&q=90" alt="Threadline Atelier Men's Campaign" loading="eager">
+        <div class="hero-scrim"></div>
+      </div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">THE 2026 SARTORIAL CAMPAIGN / MILANO — SAVILE ROW</p>
+        <h1 class="hero-headline">Everyday, <em>elevated.</em><br>The Luxury <em>Men's</em> Edit.</h1>
+        <p class="hero-description">
+          Architectural silhouettes cut from super 150s virgin wool, raw Japanese selvedge, and pure Mongolian cashmere. Crafted for the discerning gentleman.
+        </p>
+        <div class="hero-cta-group">
+          <a class="luxury-btn btn-gold" href="#new">EXPLORE NEW ARRIVALS <span>→</span></a>
+          <a class="luxury-btn btn-ghost" href="#editorial">THE ATELIER HERITAGE</a>
+        </div>
+      </div>
+      <div class="hero-indicator">
+        <span class="indicator-bar"></span>
+        <span class="indicator-text">01 — 32 MASTERPIECES</span>
+      </div>
+    </section>
+
+    <!-- Brand Philosophy Bar -->
+    <section class="philosophy-strip">
+      <div class="philosophy-item">
+        <span class="strip-icon">✦</span>
+        <h4>ITALIAN CRAFTSMANSHIP</h4>
+        <p>Bespoke construction using centuries-old Neapolitan and Biella methods.</p>
+      </div>
+      <div class="philosophy-item">
+        <span class="strip-icon">✦</span>
+        <h4>NOBLE RAW FIBRES</h4>
+        <p>Grade-A Mongolian cashmere, Sea Island cotton, and Kurabo selvedge.</p>
+      </div>
+      <div class="philosophy-item">
+        <span class="strip-icon">✦</span>
+        <h4>RAZORPAY SECURE GATEWAY</h4>
+        <p>Instant UPI, Cards, NetBanking, and complimentary insured courier.</p>
+      </div>
+    </section>
+
+    <!-- 4. New Collection -->
+    <section class="section-container" id="new">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">SPRING / SUMMER 2026</span>
+          <h2 class="section-title">The New <em>Arrivals</em></h2>
+        </div>
+        <a class="view-all-link" href="#featured" data-collection-filter="new">VIEW ALL NEW PIECES →</a>
+      </div>
+      <div class="curated-grid" id="newArrivalsGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- 5. Featured Men's Collection & Interactive Filter -->
+    <section class="section-container" id="featured">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">THE COMPLETE CATALOGUE</span>
+          <h2 class="section-title">Sartorial <em>Creations</em></h2>
+        </div>
+        <div class="catalog-controls">
+          <div class="filter-pill-scroll" id="categoryFilters">
+            <button class="filter-pill active" data-category="All">All Creations</button>
+            <button class="filter-pill" data-category="Blazers and Suits">Blazers & Suits</button>
+            <button class="filter-pill" data-category="Jackets">Jackets & Coats</button>
+            <button class="filter-pill" data-category="Premium Shirts">Shirts</button>
+            <button class="filter-pill" data-category="Luxury T-Shirts">Knitwear & Tees</button>
+            <button class="filter-pill" data-category="Trousers">Trousers</button>
+            <button class="filter-pill" data-category="Denim">Selvedge Denim</button>
+            <button class="filter-pill" data-category="Sneakers">Sneakers</button>
+            <button class="filter-pill" data-category="Formal Shoes">Formal Shoes</button>
+            <button class="filter-pill" data-category="Luxury Watches">Timepieces</button>
+            <button class="filter-pill" data-category="Leather Wallets">Leather Goods</button>
+            <button class="filter-pill" data-category="Belts">Belts</button>
+            <button class="filter-pill" data-category="Sunglasses">Eyewear</button>
+            <button class="filter-pill" data-category="Perfumes">Fragrances</button>
+            <button class="filter-pill" data-category="Premium Accessories">Accessories</button>
+          </div>
+          
+          <div class="sort-and-price-bar">
+            <div class="price-band-selector">
+              <label for="priceRangeFilter">Price Filter:</label>
+              <select id="priceRangeFilter">
+                <option value="all">All Prices</option>
+                <option value="under25k">Under ₹25,000</option>
+                <option value="25k-60k">₹25,000 – ₹60,000</option>
+                <option value="60k-100k">₹60,000 – ₹1,00,000</option>
+                <option value="above100k">Above ₹1,00,000</option>
+              </select>
+            </div>
+            <div class="sort-selector">
+              <label for="sortSelect">Sort By:</label>
+              <select id="sortSelect">
+                <option value="featured">Curated Editorial</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
+                <option value="newest">Newest Additions</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Product Grid -->
+      <div class="luxury-product-grid" id="mainProductGrid">
+        <!-- Rendered dynamically -->
+      </div>
+      <div class="empty-state hidden" id="emptyCatalogueState">
+        <p class="empty-title">No creations match your refined selection.</p>
+        <button class="luxury-btn btn-ghost" id="resetFiltersBtn">RESET FILTERS</button>
+      </div>
+    </section>
+
+    <!-- 6. Best Sellers Spotlight -->
+    <section class="section-container dark-bg" id="bestsellers">
+      <div class="section-header light-text">
+        <div>
+          <span class="section-eyebrow gold">ICONIC ATELIER PIECES</span>
+          <h2 class="section-title">Permanent <em>Icons</em></h2>
+        </div>
+        <p class="section-subtitle">
+          The pieces gentlemen across London, Milan, Mumbai and Tokyo continually return for.
+        </p>
+      </div>
+      <div class="curated-grid" id="bestsellersGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- 7. Premium Footwear Collection -->
+    <section class="section-container" id="footwear">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">LEATHER CRAFTSMANSHIP</span>
+          <h2 class="section-title">The Footwear <em>Gallery</em></h2>
+        </div>
+        <a class="view-all-link" href="#featured" data-cat-filter="Formal Shoes">EXPLORE ALL FOOTWEAR →</a>
+      </div>
+      <div class="footwear-feature-grid">
+        <div class="footwear-banner">
+          <img src="https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=1200&q=80" alt="Wholecut Oxfords" loading="lazy">
+          <div class="footwear-banner-content">
+            <span class="banner-badge">CLOSED-CHANNEL SOLE</span>
+            <h3>Handmade Wholecut Oxfords</h3>
+            <p>Carved from a singular unbroken piece of French calfskin.</p>
+            <button class="luxury-btn btn-gold quick-view-btn" data-quick-id="18">DISCOVER CRAFT</button>
+          </div>
+        </div>
+        <div class="footwear-items-column" id="footwearShowcaseGrid">
+          <!-- Footwear items populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Luxury Accessories & Timepieces Showcase -->
+    <section class="section-container beige-bg" id="accessories">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">HAUTE HORLOGERIE & OBJETS D'ART</span>
+          <h2 class="section-title">Curated <em>Accessories</em></h2>
+        </div>
+        <p class="section-subtitle">Fine jewelry, Swiss complications, Tuscan belts, and bespoke fragrances.</p>
+      </div>
+      <div class="curated-grid" id="accessoriesGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- 9. Editorial Fashion Campaign (Gucci / LV Style) -->
+    <section class="editorial-campaign" id="editorial">
+      <div class="campaign-split">
+        <div class="campaign-image-col">
+          <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=1400&q=85" alt="Editorial Campaign" loading="lazy">
+          <div class="image-caption">ATELIER MASTER TAILOR AT WORK / MILANO</div>
+        </div>
+        <div class="campaign-text-col">
+          <span class="section-eyebrow gold">THE ATELIER HERITAGE</span>
+          <h2 class="campaign-title">The Poetry of <em>Precision.</em></h2>
+          <p class="campaign-lead">
+            Every garment begins with pencil on vellum, followed by hundreds of hand-placed basting stitches that mould the canvas to the chest over months.
+          </p>
+          <div class="campaign-details">
+            <div class="craft-point">
+              <strong>FULL HORSEHAIR CANVAS</strong>
+              <p>Adapts organically to the contours of your physique with every wear.</p>
+            </div>
+            <div class="craft-point">
+              <strong>HAND-ROLLED EDGES</strong>
+              <p>Silk twill pocket squares and lapels finished entirely by master artisans.</p>
+            </div>
+          </div>
+          <div class="campaign-quote">
+            “True luxury whispers. It resides in the invisible stitches and how a jacket feels when slipping into it at dusk.”
+          </div>
+          <a class="luxury-btn btn-gold" href="#featured" data-cat-filter="Blazers and Suits">EXPLORE BESPOKE TAILORING →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Exclusive Collection (Atelier Capsule) -->
+    <section class="section-container" id="exclusive">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">ATELIER PRIVATE RESERVE</span>
+          <h2 class="section-title">Exclusive <em>Capsule</em></h2>
+        </div>
+        <p class="section-subtitle">Strictly limited production runs numbered by hand.</p>
+      </div>
+      <div class="curated-grid" id="exclusiveGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </section>
+
+    <!-- 11. Private Client Newsletter / Concierge -->
+    <section class="newsletter-section">
+      <div class="newsletter-card">
+        <span class="section-eyebrow gold">THE PRIVATE SALON</span>
+        <h2 class="newsletter-heading">Receive Private Salon <em>Invitations</em></h2>
+        <p class="newsletter-desc">
+          Members of our Private Client Circle receive advance allocations of limited capsule drops, private trunk show reservations, and personal concierge service.
+        </p>
+        <form class="newsletter-form" id="newsletterForm">
+          <div class="input-row">
+            <input type="email" id="newsletterEmail" placeholder="Enter your private email address" required>
+            <button type="submit" class="luxury-btn btn-gold">JOIN THE ATELIER <span>→</span></button>
+          </div>
+          <p class="newsletter-note">By subscribing you agree to our Private Client Privacy Charter.</p>
+        </form>
+        <div class="newsletter-success hidden" id="newsletterSuccess">
+          ✦ You have been welcomed to the Private Client Circle. Your concierge invitation has been dispatched.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 12. Premium Luxury Footer -->
+  
+  <!-- ========================================== -->
+  <!-- ATELIER PRIVÉ VIP MEMBERSHIP SECTION       -->
+  <!-- ========================================== -->
+  <section class="membership-section" id="membership">
+    <div class="container">
+      <div class="section-header text-center">
+        <span class="section-eyebrow gold">L'ATELIER PRIVÉ & BESPOKE CIRCLE</span>
+        <h2 class="section-title light-text">Privileged Sartorial Membership</h2>
+        <p class="section-subtitle light-muted">
+          An invitation to discerning patrons seeking unparalleled bespoke tailoring, private stylist concierges, 
+          and permanent privileges applied directly to all 32 Threadline Atelier haute creations.
+        </p>
+        <div class="membership-current-status hidden" id="activeMembershipBanner">
+          <span class="crown-icon">👑</span>
+          <span id="activeMembershipText">YOU ARE AN ACTIVE GOLD HAUTE COUTURE PATRON (15% PRIVILEGE APPLIED)</span>
+        </div>
+      </div>
+
+      <div class="membership-grid">
+        <!-- Tier 1: Silver Privé -->
+        <div class="membership-card" data-tier="silver">
+          <div class="card-crest">✦</div>
+          <span class="tier-label">CONNOISSEUR</span>
+          <h3 class="tier-name">Silver Privé</h3>
+          <p class="tier-tagline">Refined wardrobe curation & private access</p>
+          <div class="tier-price-box">
+            <span class="currency">₹</span>
+            <span class="price-val">4,999</span>
+            <span class="period">/ year</span>
+          </div>
+          <div class="tier-discount-badge">10% OFF ENTIRE CATALOG</div>
+          <ul class="tier-features-list">
+            <li><span class="bullet-star">✦</span> <strong>10% Permanent Privilege Discount</strong> on all 32 sartorial creations</li>
+            <li><span class="bullet-star">✦</span> <strong>Complimentary White-Glove Courier</strong> on every order, no minimum</li>
+            <li><span class="bullet-star">✦</span> <strong>48-Hour Early Access</strong> to seasonal capsule pre-orders</li>
+            <li><span class="bullet-star">✦</span> Digital Certificate of Atelier Authenticity & provenance</li>
+          </ul>
+          <button type="button" class="luxury-btn btn-ghost join-tier-btn" data-tier-id="silver" data-tier-name="Silver Privé" data-price="4999">
+            JOIN SILVER PRIVÉ — ₹4,999 <span>→</span>
+          </button>
+        </div>
+
+        <!-- Tier 2: Gold Haute Couture (Featured) -->
+        <div class="membership-card featured-tier" data-tier="gold">
+          <div class="featured-ribbon">MOST POPULAR PRIVILEGE</div>
+          <div class="card-crest gold">✦ ✦</div>
+          <span class="tier-label gold">ATELIER FELLOW</span>
+          <h3 class="tier-name">Gold Haute Couture</h3>
+          <p class="tier-tagline">Master tailoring at home & dedicated personal stylist</p>
+          <div class="tier-price-box">
+            <span class="currency">₹</span>
+            <span class="price-val">14,999</span>
+            <span class="period">/ year</span>
+          </div>
+          <div class="tier-discount-badge gold">15% OFF ENTIRE CATALOG</div>
+          <ul class="tier-features-list">
+            <li><span class="bullet-star">✦</span> <strong>15% VIP Sartorial Discount</strong> automatically deducted in shopping bag</li>
+            <li><span class="bullet-star">✦</span> <strong>At-Home Master Tailor Fitting Service</strong> (2 visits per year)</li>
+            <li><span class="bullet-star">✦</span> <strong>Personal Stylist Concierge</strong> via private WhatsApp line</li>
+            <li><span class="bullet-star">✦</span> <strong>Priority Express Dispatch</strong> from Milan and Mumbai ateliers</li>
+            <li><span class="bullet-star">✦</span> Invitation to private runway exhibitions & champagne salons</li>
+          </ul>
+          <button type="button" class="luxury-btn btn-gold join-tier-btn" data-tier-id="gold" data-tier-name="Gold Haute Couture" data-price="14999">
+            JOIN GOLD HAUTE COUTURE — ₹14,999 <span>→</span>
+          </button>
+        </div>
+
+        <!-- Tier 3: Black Diamond Royal Bespoke -->
+        <div class="membership-card diamond-tier" data-tier="black_diamond">
+          <div class="card-crest diamond">✦ ✦ ✦</div>
+          <span class="tier-label diamond">ROYAL PATRON</span>
+          <h3 class="tier-name">Royal Bespoke</h3>
+          <p class="tier-tagline">Unlimited bespoke tailoring & private vault access</p>
+          <div class="tier-price-box">
+            <span class="currency">₹</span>
+            <span class="price-val">29,999</span>
+            <span class="period">/ year</span>
+          </div>
+          <div class="tier-discount-badge diamond">20% OFF ENTIRE CATALOG</div>
+          <ul class="tier-features-list">
+            <li><span class="bullet-star">✦</span> <strong>20% Elite Patron Discount</strong> on all creations & limited drops</li>
+            <li><span class="bullet-star">✦</span> <strong>Unlimited Bespoke Alterations</strong> & monogramming on all suiting</li>
+            <li><span class="bullet-star">✦</span> <strong>The Private Vault Access:</strong> Bespoke one-of-a-kind rare couture</li>
+            <li><span class="bullet-star">✦</span> <strong>Chauffeur Service</strong> to flagship showroom fitting appointments</li>
+            <li><span class="bullet-star">✦</span> Bespoke wooden hangers & handcrafted Italian calfskin garment bag</li>
+          </ul>
+          <button type="button" class="luxury-btn btn-outline-gold join-tier-btn" data-tier-id="black_diamond" data-tier-name="Black Diamond Royal Bespoke" data-price="29999">
+            JOIN ROYAL BESPOKE — ₹29,999 <span>→</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Secure Payment Guarantee Note -->
+      <div class="membership-guarantee">
+        <div class="guarantee-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>256-Bit Encrypted Razorpay Gateway</span>
+        </div>
+        <div class="guarantee-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          <span>Instant Privilege Activation Across Your Session</span>
+        </div>
+        <div class="guarantee-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+          <span>Cancel or Upgrade Anytime via Client Concierge</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<footer class="luxury-footer">
+    <div class="footer-top">
+      <div class="footer-col brand-col">
+        <a class="brand-logo footer-logo" href="#">
+          <span class="logo-title">THREADLINE</span>
+          <span class="logo-subtitle">ATELIER</span>
+        </a>
+        <p class="brand-tagline">
+          Haute Tailoring & Ready-to-Wear for the Modern Connoisseur.
+        </p>
+        <div class="concierge-box">
+          <span class="concierge-title">PRIVATE CLIENT CONCIERGE</span>
+          <a href="tel:+912289004000">+91 (0) 22 8900 4000</a>
+          <a href="mailto:concierge@threadlineatelier.com">concierge@threadlineatelier.com</a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">COLLECTIONS</h4>
+        <ul class="footer-links">
+          <li><a href="#featured" data-cat-filter="Blazers and Suits">Bespoke Suits & Blazers</a></li>
+          <li><a href="#featured" data-cat-filter="Jackets">Cashmere Coats & Leather</a></li>
+          <li><a href="#featured" data-cat-filter="Premium Shirts">Sea Island Cotton Shirts</a></li>
+          <li><a href="#footwear">Handmade Footwear</a></li>
+          <li><a href="#accessories">Haute Horlogerie & Watches</a></li>
+          <li><a href="#featured" data-cat-filter="Perfumes">Rare Flacons & Fragrance</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">CLIENT SERVICES</h4>
+        <ul class="footer-links">
+          <li><a href="#" id="openConciergeModal">Book a Fitting Appointment</a></li>
+          <li><a href="#" id="openCareGuide">Garment & Leather Care Guide</a></li>
+          <li><a href="#" id="openAuthModal">Certificate of Authenticity</a></li>
+          <li><a href="#" id="openShippingModal">Complimentary White-Glove Shipping</a></li>
+          <li><a href="#" id="openReturnModal">Bespoke Returns & Exchanges</a></li>
+          <li><a href="#" id="footerOrdersLink">Track Private Order Status</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-heading">BOUTIQUES</h4>
+        <div class="boutique-list">
+          <div class="boutique-item">
+            <strong>MUMBAI FLAGSHIP</strong>
+            <p>The Palladium, High Street Phoenix, Lower Parel</p>
+          </div>
+          <div class="boutique-item">
+            <strong>NEW DELHI SALON</strong>
+            <p>DLF Emporio, Vasant Kunj, New Delhi</p>
+          </div>
+          <div class="boutique-item">
+            <strong>BENGALURU BOUTIQUE</strong>
+            <p>The Collection, UB City, Vittal Mallya Road</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="payment-badges">
+        <span class="secure-tag">SECURED VIA RAZORPAY INDIA</span>
+        <span class="badge-item">UPI</span>
+        <span class="badge-item">UPI QR</span>
+        <span class="badge-item">RuPay</span>
+        <span class="badge-item">Visa</span>
+        <span class="badge-item">Mastercard</span>
+        <span class="badge-item">American Express</span>
+        <span class="badge-item">Net Banking</span>
+      </div>
+      <div class="copyright-line">
+        <p>© 2026 THREADLINE ATELIER. All rights reserved. Original Luxury Identity.</p>
+        <div class="legal-links">
+          <a href="#">Privacy Charter</a>
+          <a href="#">Terms of Sale</a>
+          <a href="#">Authenticity Guarantee</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= DRAWERS & MODALS ================= -->
+
+  <!-- Backdrop Overlay -->
+  <div class="global-overlay hidden" id="globalOverlay"></div>
+
+  <!-- Shopping Bag Drawer -->
+  <aside class="luxury-drawer cart-drawer" id="cartDrawer" aria-label="Shopping Bag">
+    <div class="drawer-header">
+      <div>
+        <span class="drawer-eyebrow">YOUR ATELIER SELECTION</span>
+        <h2 class="drawer-title">Shopping Bag <span id="cartDrawerCount">(0)</span></h2>
+      </div>
+      <button class="drawer-close-btn" id="cartClose">✕</button>
+    </div>
+
+    <!-- Free Shipping Progress Indicator -->
+    <div class="shipping-progress-wrap" id="shippingProgressWrap">
+      <p id="shippingProgressText">Add items to qualify for complimentary delivery.</p>
+      <div class="progress-track">
+        <div class="progress-fill" id="shippingProgressFill" style="width: 0%;"></div>
+      </div>
+    </div>
+
+    <!-- Cart Item List -->
+    <div class="drawer-items" id="cartItemList">
+      <!-- Populated dynamically -->
+    </div>
+
+    <!-- Drawer Footer & Calculation -->
+    <div class="drawer-footer">
+      <div class="promo-code-wrap">
+        <input type="text" id="promoCodeInput" placeholder="Privilege Code (e.g. ATELIER10)">
+        <button id="applyPromoBtn">APPLY</button>
+      </div>
+      <p class="promo-feedback" id="promoFeedback"></p>
+
+      <div class="summary-breakdown">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <strong id="cartSubtotal">₹0</strong>
+        </div>
+        <div class="summary-row discount-row hidden" id="cartDiscountRow">
+          <span>Privilege Privilege (10%)</span>
+          <strong id="cartDiscount">-₹0</strong>
+        </div>
+        <div class="summary-row">
+          <span>White-Glove Shipping</span>
+          <span id="cartShipping">Calculated at checkout</span>
+        </div>
+        <div class="summary-row total-row">
+          <span>Total (incl. all luxury duties)</span>
+          <strong id="cartTotal">₹0</strong>
+        </div>
+      </div>
+
+      <button class="luxury-btn btn-gold full-width" id="checkoutTriggerBtn">
+        PROCEED TO SECURE CHECKOUT <span>→</span>
+      </button>
+      <p class="drawer-trust-note">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        Powered by Razorpay India · 256-bit Bank Encryption
+      </p>
+    </div>
+  </aside>
+
+  <!-- Wishlist Drawer -->
+  <aside class="luxury-drawer wishlist-drawer" id="wishlistDrawer" aria-label="Saved Wishlist">
+    <div class="drawer-header">
+      <div>
+        <span class="drawer-eyebrow">YOUR PRIVATE SELECTION</span>
+        <h2 class="drawer-title">Wishlist <span id="wishlistDrawerCount">(0)</span></h2>
+      </div>
+      <button class="drawer-close-btn" id="wishlistClose">✕</button>
+    </div>
+    <div class="drawer-items" id="wishlistItemsList">
+      <!-- Wishlist items populated via JS -->
+    </div>
+  </aside>
+
+  <!-- Client Order History Drawer -->
+  <aside class="luxury-drawer orders-drawer" id="ordersDrawer" aria-label="Order History">
+    <div class="drawer-header">
+      <div>
+        <span class="drawer-eyebrow">PRIVATE CLIENT RECORD</span>
+        <h2 class="drawer-title">Order History</h2>
+      </div>
+      <button class="drawer-close-btn" id="ordersClose">✕</button>
+    </div>
+    <div class="drawer-items" id="ordersHistoryList">
+      <!-- Orders loaded via JS -->
+    </div>
+  </aside>
+
+  <!-- Product Detail & Quick View Modal -->
+  <div class="luxury-modal hidden" id="productModal">
+    <div class="modal-card product-modal-card">
+      <button class="modal-close-btn" id="productModalClose">✕</button>
+      <div class="product-modal-grid">
+        <div class="modal-image-col">
+          <img id="modalProductImage" src="" alt="Product Detail">
+          <span class="modal-badge" id="modalProductBadge"></span>
+        </div>
+        <div class="modal-info-col">
+          <span class="modal-eyebrow" id="modalProductCategory"></span>
+          <h2 class="modal-title" id="modalProductName"></h2>
+          
+          <div class="modal-rating-row">
+            <span class="stars" id="modalProductStars">★★★★★</span>
+            <span class="rating-text" id="modalProductRatingText"></span>
+          </div>
+
+          <div class="modal-price" id="modalProductPrice"></div>
+          <p class="modal-stock" id="modalProductStock"></p>
+
+          <p class="modal-description" id="modalProductDescription"></p>
+
+          <!-- Color Swatch Selector -->
+          <div class="selector-group">
+            <label class="selector-label">SELECT HUE: <span id="selectedColorName"></span></label>
+            <div class="color-swatches" id="modalColorSwatches"></div>
+          </div>
+
+          <!-- Size Selector -->
+          <div class="selector-group">
+            <div class="size-header">
+              <label class="selector-label">SELECT SIZE:</label>
+              <button class="size-guide-btn" id="sizeGuideBtn">SIZE GUIDE 📏</button>
+            </div>
+            <div class="size-pills" id="modalSizePills"></div>
+          </div>
+
+          <!-- Quantity Selector -->
+          <div class="modal-actions-row">
+            <div class="qty-stepper">
+              <button id="modalQtyMinus">−</button>
+              <span id="modalQtyVal">1</span>
+              <button id="modalQtyPlus">+</button>
+            </div>
+            <button class="luxury-btn btn-gold flex-grow" id="modalAddToCartBtn">
+              ADD TO BAG <span>✦</span>
+            </button>
+            <button class="wishlist-btn-icon" id="modalWishlistBtn" aria-label="Save to Wishlist">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </button>
+          </div>
+
+          <!-- Trust Badges -->
+          <div class="modal-perks">
+            <div><span>✓</span> Complimentary insured courier across India</div>
+            <div><span>✓</span> 14-day private concierge returns & exchanges</div>
+            <div><span>✓</span> Certificate of craftsmanship authenticity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Luxury Checkout Modal -->
+  <div class="luxury-modal hidden" id="checkoutModal">
+    <div class="modal-card checkout-modal-card">
+      <button class="modal-close-btn" id="checkoutClose">✕</button>
+      <div class="checkout-header">
+        <span class="section-eyebrow gold">SECURE ATELIER CHECKOUT</span>
+        <h2 class="checkout-title">Order Finalization</h2>
+      </div>
+
+      <!-- Live Payment Mode Notice -->
+      <div class="payment-mode-banner" id="paymentModeBanner">
+        <span class="mode-indicator" id="modeIndicator">●</span>
+        <span id="modeText">Razorpay Payment Gateway · Ready for Transaction</span>
+      </div>
+
+      <div class="checkout-layout">
+        <!-- Shipping Details Form -->
+        <div class="checkout-form-col">
+          <h3>1. Delivery Address</h3>
+          <form id="checkoutShippingForm">
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="shipName">Full Name *</label>
+                <input type="text" id="shipName" name="name" required placeholder="Lord / Mr. Alexander Smith">
+              </div>
+              <div class="form-group flex-1">
+                <label for="shipPhone">Mobile Number (for Courier & UPI) *</label>
+                <input type="tel" id="shipPhone" name="phone" required placeholder="+91 98765 43210">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="shipEmail">Email Address (for Receipt & Tracking) *</label>
+              <input type="email" id="shipEmail" name="email" required placeholder="alexander@domain.com">
+            </div>
+
+            <div class="form-group">
+              <label for="shipAddress">Bespoke Suite / House / Street Address *</label>
+              <textarea id="shipAddress" name="address" rows="2" required placeholder="Penthouse 4B, Signature Towers, Altamount Road"></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="shipCity">City *</label>
+                <input type="text" id="shipCity" name="city" required placeholder="Mumbai">
+              </div>
+              <div class="form-group flex-1">
+                <label for="shipState">State *</label>
+                <input type="text" id="shipState" name="state" required placeholder="Maharashtra">
+              </div>
+              <div class="form-group flex-1">
+                <label for="shipPincode">PIN Code *</label>
+                <input type="text" id="shipPincode" name="pincode" required placeholder="400026">
+              </div>
+            </div>
+
+            <h3 class="payment-section-heading">2. Payment Method — Razorpay India</h3>
+            <div class="payment-method-selector">
+              <div class="payment-option selected">
+                <div class="option-header">
+                  <input type="radio" checked name="payMethod" id="methodRazorpay">
+                  <label for="methodRazorpay">
+                    <strong>Razorpay Instant Gateway</strong>
+                    <span>Instant UPI, Cards (Visa, Master, Amex, RuPay), NetBanking, UPI QR</span>
+                  </label>
+                </div>
+                <div class="payment-option-logos">
+                  <span>UPI / QR</span> · <span>Credit & Debit Cards</span> · <span>NetBanking (50+ Banks)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="checkout-actions">
+              <button type="submit" class="luxury-btn btn-gold full-width" id="payWithRazorpayBtn">
+                PAY SECURELY WITH RAZORPAY (<span id="payBtnAmount">₹0</span>) <span>→</span>
+              </button>
+            </div>
+            <p class="payment-notice-text">
+              By placing this order you authorize THREADLINE ATELIER to initiate transaction processing. Your credentials are never stored on our servers.
+            </p>
+          </form>
+        </div>
+
+        <!-- Order Summary Column -->
+        <div class="checkout-summary-col">
+          <h3>Order Summary</h3>
+          <div class="checkout-items-preview" id="checkoutItemsPreview"></div>
+          
+          <div class="checkout-calc-table">
+            <div class="calc-row">
+              <span>Bag Subtotal</span>
+              <span id="coSubtotal">₹0</span>
+            </div>
+            <div class="calc-row discount-row hidden" id="coDiscountRow">
+              <span>Privilege Privilege</span>
+              <span id="coDiscount">-₹0</span>
+            </div>
+            <div class="calc-row">
+              <span>Insured Delivery</span>
+              <span id="coShipping">₹0</span>
+            </div>
+            <div class="calc-row final-row">
+              <strong>Order Total</strong>
+              <strong id="coTotal">₹0</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Confirmation & Luxury Receipt Modal -->
+  <div class="luxury-modal hidden" id="receiptModal">
+    <div class="modal-card receipt-modal-card">
+      <div class="receipt-header">
+        <span class="gold-crest">✦</span>
+        <span class="section-eyebrow gold">ORDER CONFIRMATION</span>
+        <h2 class="receipt-title">Thank You, Gentleman.</h2>
+        <p class="receipt-lead">Your order has been recorded at the Atelier. Our master tailors and private courier are preparing your pieces.</p>
+      </div>
+
+      <div class="receipt-details-box">
+        <div class="receipt-meta">
+          <div>
+            <label>ORDER REFERENCE</label>
+            <strong id="receiptOrderId">TL-XXXX</strong>
+          </div>
+          <div>
+            <label>DATE & TIME</label>
+            <span id="receiptDate"></span>
+          </div>
+          <div>
+            <label>PAYMENT STATUS</label>
+            <span class="status-tag status-paid" id="receiptStatus">VERIFIED & PAID</span>
+          </div>
+          <div>
+            <label>TRANSACTION ID</label>
+            <span id="receiptTxnId"></span>
+          </div>
+        </div>
+
+        <div class="receipt-client-info">
+          <div>
+            <label>RECIPIENT</label>
+            <p id="receiptClientName"></p>
+            <p id="receiptClientContact"></p>
+          </div>
+          <div>
+            <label>DELIVERY DESTINATION</label>
+            <p id="receiptClientAddress"></p>
+          </div>
+        </div>
+
+        <div class="receipt-items-table" id="receiptItemsTable"></div>
+
+        <div class="receipt-total-bar">
+          <span>Total Paid (INR)</span>
+          <strong id="receiptTotalAmount">₹0</strong>
+        </div>
+      </div>
+
+      <div class="receipt-actions">
+        <button class="luxury-btn btn-gold" id="printReceiptBtn">PRINT OFFICIAL RECEIPT 🖨</button>
+        <button class="luxury-btn btn-ghost" id="receiptDoneBtn">CONTINUE BROWSING ATELIER</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instant Private Client Login Modal -->
+  <div class="luxury-modal hidden" id="loginModal">
+    <div class="modal-card login-modal-card">
+      <button class="modal-close-btn" id="loginModalClose">✕</button>
+      <div class="login-modal-header">
+        <span class="gold-crest">✦</span>
+        <span class="section-eyebrow gold">THREADLINE ATELIER</span>
+        <h2 class="login-title">Private Salon Entrance</h2>
+        <p class="login-subtitle">
+          Enter your email and mobile number to access the 2026 Sartorial Men's Collection, personalized concierge services, and private allocations.
+        </p>
+      </div>
+
+      <form class="luxury-login-form" id="quickLoginForm">
+        <div class="form-group">
+          <label for="loginName">Full Name *</label>
+          <input type="text" id="loginName" placeholder="e.g. Alexander Sterling" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="loginEmail">Email Address *</label>
+          <input type="email" id="loginEmail" placeholder="e.g. alexander@domain.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="loginPhone">Mobile Number *</label>
+          <input type="tel" id="loginPhone" placeholder="e.g. +91 98765 43210" required autocomplete="tel">
+        </div>
+
+        <button type="submit" class="luxury-btn btn-gold full-width" id="enterAtelierBtn">
+          ENTER THE ATELIER <span>→</span>
+        </button>
+
+        <div class="login-footer-actions">
+          <button type="button" class="guest-enter-link" id="continueGuestBtn">
+            Continue as Guest Visitor →
+          </button>
+        </div>
+      </form>
+
+      <div class="login-benefits">
+        <div><span>✦</span> Instant access with zero passwords or backend setup needed</div>
+        <div><span>✦</span> Automatically pre-fills your shipping details at checkout</div>
+        <div><span>✦</span> Saves your bespoke wishlist and private order receipts</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Profile & Status Modal -->
+  <div class="luxury-modal hidden" id="profileModal">
+    <div class="modal-card profile-modal-card">
+      <button class="modal-close-btn" id="profileModalClose">✕</button>
+      <div class="profile-header">
+        <span class="gold-crest">✦</span>
+        <span class="section-eyebrow gold">PRIVATE CLIENT PROFILE</span>
+        <h2 class="profile-client-name" id="profClientName">Client</h2>
+        <span class="status-tag status-paid" id="profVipBadge">CONNOISSEUR MEMBER</span>
+      </div>
+
+      <div class="profile-details-box">
+        <div class="profile-row">
+          <label>EMAIL ADDRESS</label>
+          <span id="profClientEmail"></span>
+        </div>
+        <div class="profile-row">
+          <label>REGISTERED MOBILE</label>
+          <span id="profClientPhone"></span>
+        </div>
+        <div class="profile-row">
+          <label>MEMBERSHIP TIER</label>
+          <span>Private Salon Privileges (Active)</span>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="luxury-btn btn-gold" id="profViewOrdersBtn">VIEW ORDER HISTORY <span>→</span></button>
+        <button class="luxury-btn btn-ghost" id="profSignOutBtn">SIGN OUT</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Informational Modal (Size Guide, Care, Authenticity) -->
+  <div class="luxury-modal hidden" id="infoModal">
+    <div class="modal-card info-modal-card">
+      <button class="modal-close-btn" id="infoModalClose">✕</button>
+      <div id="infoModalContent"></div>
+    </div>
+  </div>
+
+  <!-- Voice Recognition Listening Modal -->
+  <div class="luxury-modal hidden" id="voiceModal">
+    <div class="modal-card voice-modal-card">
+      <button class="modal-close-btn" id="voiceModalClose" type="button">✕</button>
+      <div class="voice-modal-header">
+        <span class="gold-crest">✦</span>
+        <span class="section-eyebrow gold">ATELIER VOICE CONCIERGE</span>
+        <h2 class="voice-modal-title">Sartorial Voice Control</h2>
+        <p class="voice-modal-sub">Speak naturally to find creations or navigate the atelier</p>
+      </div>
+
+      <div class="voice-visualizer">
+        <div class="voice-ripple ring-1"></div>
+        <div class="voice-ripple ring-2"></div>
+        <div class="voice-ripple ring-3"></div>
+        <div class="voice-mic-core" id="voiceMicPulse">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+        </div>
+      </div>
+
+      <p class="voice-status-text" id="voiceStatusText">Listening to your voice... Speak now</p>
+
+      <div class="voice-transcript-box" id="voiceTranscriptBox">
+        <span class="transcript-label">HEARD:</span>
+        <span class="transcript-text" id="voiceTranscriptText">"..."</span>
+      </div>
+
+      <div class="voice-hints">
+        <div class="hint-title">TRY SAYING:</div>
+        <div class="hint-tags">
+          <button type="button" class="hint-pill" data-voice-sample="Tuxedo">"Tuxedo"</button>
+          <button type="button" class="hint-pill" data-voice-sample="Silk Shirts">"Silk Shirts"</button>
+          <button type="button" class="hint-pill" data-voice-sample="Shoes">"Shoes"</button>
+          <button type="button" class="hint-pill" data-voice-sample="Open Bag">"Open Bag"</button>
+          <button type="button" class="hint-pill" data-voice-sample="Membership">"Membership"</button>
+          <button type="button" class="hint-pill" data-voice-sample="Checkout">"Checkout"</button>
+          <button type="button" class="hint-pill" data-voice-sample="Show All">"Show All"</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Membership Welcome & Certificate Modal -->
+  <div class="luxury-modal hidden" id="membershipSuccessModal">
+    <div class="modal-card membership-success-card">
+      <button class="modal-close-btn" id="membershipModalClose" type="button">✕</button>
+      <div class="membership-cert-wrap">
+        <div class="cert-border">
+          <span class="cert-crest">👑</span>
+          <span class="cert-eyebrow">THREADLINE ATELIER • L'ATELIER PRIVÉ</span>
+          <h2 class="cert-title">Certificate of Sartorial Privilege</h2>
+          <p class="cert-subtitle">This certifies that our distinguished patron is recognized as an active fellow:</p>
+          <div class="cert-patron-name" id="certPatronName">Client Name</div>
+          <div class="cert-tier-badge" id="certTierBadge">GOLD HAUTE COUTURE</div>
+          <div class="cert-details-grid">
+            <div><strong>PRIVILEGE DISCOUNT:</strong> <span id="certDiscountVal">15% Off All Creations</span></div>
+            <div><strong>MEMBERSHIP ID:</strong> <span id="certMemberId">TL-VIP-98231</span></div>
+            <div><strong>PAYMENT STATUS:</strong> <span class="cert-verified">✓ Authenticated via Razorpay</span></div>
+            <div><strong>VALIDITY:</strong> <span id="certValidity">1 Full Calendar Year</span></div>
+          </div>
+          <div class="cert-actions">
+            <button type="button" class="luxury-btn btn-gold full-width" id="startVipShoppingBtn">
+              EXPLORE COLLECTION WITH PRIVILEGE <span>→</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Application Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
