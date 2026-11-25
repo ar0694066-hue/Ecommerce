@@ -368,7 +368,71 @@
   let CART = JSON.parse(localStorage.getItem("threadline_bag") || "[]");
   let WISHLIST = JSON.parse(localStorage.getItem("threadline_wishlist") || "[]");
   let APPLIED_PROMO = localStorage.getItem("threadline_promo") || null;
-  let CONFIG = { brandName: "THREADLINE ATELIER", isRazorpayConfigured: false, razorpayKeyId: null, mode: "simulation" };
+  let CONFIG = {
+    brandName: "THREADLINE ATELIER",
+    upiId: "ar0694066-1@okicic",
+    upiPayeeName: "THREADLINE ATELIER",
+    isRazorpayConfigured: false,
+    razorpayKeyId: null,
+    mode: "simulation",
+  };
+
+  function getUpiId() {
+    return (CONFIG && CONFIG.upiId) || "ar0694066-1@okicic";
+  }
+
+  function buildUpiUri(amount, note) {
+    const upiId = getUpiId();
+    const payee = (CONFIG && CONFIG.upiPayeeName) || "THREADLINE ATELIER";
+    const params = new URLSearchParams({
+      pa: upiId,
+      pn: payee,
+      am: Number(amount || 0).toFixed(2),
+      cu: "INR",
+      tn: note || "THREADLINE ATELIER Payment",
+    });
+    return `upi://pay?${params.toString()}`;
+  }
+
+  async function renderQrCodeInto(containerEl, text, size = 160) {
+    if (!containerEl) return;
+    if (window.QRCode && typeof window.QRCode.toString === "function") {
+      try {
+        const svg = await window.QRCode.toString(text, {
+          type: "svg",
+          width: size,
+          margin: 1,
+          errorCorrectionLevel: "M",
+          color: { dark: "#0d0d0d", light: "#ffffff" },
+        });
+        containerEl.innerHTML = svg;
+        return;
+      } catch (err) {
+        console.error("QR generation failed:", err);
+      }
+    }
+    containerEl.innerHTML = `<div style="font-size:0.7rem;color:#111;text-align:center;padding:8px;">UPI ID:<br><strong>${getUpiId()}</strong></div>`;
+  }
+
+  async function copyText(text, label = "UPI ID") {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+      }
+      showNotification(`${label} copied: ${text}`);
+    } catch (e) {
+      showNotification(`UPI ID: ${text}`);
+    }
+  }
 
   let activeCategory = "All";
   let activePriceBand = "all";
@@ -412,10 +476,11 @@
     const isLoginOpen = $("loginModal") && !$("loginModal").classList.contains("hidden");
     const isProfileOpen = $("profileModal") && !$("profileModal").classList.contains("hidden");
     const isVoiceOpen = $("voiceModal") && !$("voiceModal").classList.contains("hidden");
+    const isMembershipPayOpen = $("membershipPaymentModal") && !$("membershipPaymentModal").classList.contains("hidden");
     const isMembershipOpen = $("membershipSuccessModal") && !$("membershipSuccessModal").classList.contains("hidden");
     const isInfoOpen = $("infoModal") && !$("infoModal").classList.contains("hidden");
 
-    if (!isCartOpen && !isWishlistOpen && !isOrdersOpen && !isProductOpen && !isCheckoutOpen && !isLoginOpen && !isProfileOpen && !isVoiceOpen && !isMembershipOpen && !isInfoOpen) {
+    if (!isCartOpen && !isWishlistOpen && !isOrdersOpen && !isProductOpen && !isCheckoutOpen && !isLoginOpen && !isProfileOpen && !isVoiceOpen && !isMembershipPayOpen && !isMembershipOpen && !isInfoOpen) {
       overlay.classList.add("hidden");
     }
   }
@@ -968,6 +1033,41 @@
   // ==========================================
   // CHECKOUT & RAZORPAY PAYMENT FLOW
   // ==========================================
+  function getSelectedCheckoutMethod() {
+    const selected = document.querySelector('input[name="payMethod"]:checked');
+    return selected ? selected.value : "UPI_QR";
+  }
+
+  function syncCheckoutPaymentMethodUI(totalOverride) {
+    const method = getSelectedCheckoutMethod();
+    const isUpi = method === "UPI_QR";
+    const total = typeof totalOverride === "number" ? totalOverride : calculateCartTotals().total;
+
+    const upiCard = $("optionUpiQrCard");
+    const rzpCard = $("optionRazorpayCard");
+    const qrPanel = $("upiQrPanel");
+    const payBtn = $("payWithRazorpayBtn");
+
+    if (upiCard) upiCard.classList.toggle("selected", isUpi);
+    if (rzpCard) rzpCard.classList.toggle("selected", !isUpi);
+    if (qrPanel) qrPanel.classList.toggle("hidden", !isUpi);
+
+    if (payBtn && !payBtn.disabled) {
+      payBtn.innerHTML = isUpi
+        ? `CONFIRM UPI PAYMENT &amp; PLACE ORDER (<span id="payBtnAmount">${money(total)}</span>) <span>→</span>`
+        : `PAY SECURELY WITH RAZORPAY (<span id="payBtnAmount">${money(total)}</span>) <span>→</span>`;
+    }
+
+    if (isUpi) {
+      const upiId = getUpiId();
+      const upiUri = buildUpiUri(total, "THREADLINE ATELIER Order");
+      if ($("upiQrAmount")) $("upiQrAmount").textContent = money(total);
+      if ($("upiQrIdText")) $("upiQrIdText").textContent = upiId;
+      if ($("openUpiAppLink")) $("openUpiAppLink").href = upiUri;
+      renderQrCodeInto($("checkoutUpiQrBox"), upiUri, 152);
+    }
+  }
+
   function openCheckoutModal() {
     if (CART.length === 0) return;
     closeCartDrawer();
@@ -983,7 +1083,8 @@
     }
     $("coShipping").textContent = shipping === 0 ? "COMPLIMENTARY" : money(shipping);
     $("coTotal").textContent = money(total);
-    $("payBtnAmount").textContent = money(total);
+    if ($("payBtnAmount")) $("payBtnAmount").textContent = money(total);
+    if ($("upiRefInput")) $("upiRefInput").value = "";
 
     $("checkoutItemsPreview").innerHTML = CART.map(
       (i) => `
@@ -996,6 +1097,8 @@
         <strong>${money(i.price * i.quantity)}</strong>
       </div>`
     ).join("");
+
+    syncCheckoutPaymentMethodUI(total);
 
     $("globalOverlay").classList.remove("hidden");
     $("checkoutModal").classList.remove("hidden");
@@ -1076,9 +1179,15 @@
 
   async function handleCheckoutFormSubmit(e) {
     e.preventDefault();
+    const paymentMethod = getSelectedCheckoutMethod();
+    const isUpiQr = paymentMethod === "UPI_QR";
+    const upiRef = $("upiRefInput") ? $("upiRefInput").value.trim() : "";
+
     const payBtn = $("payWithRazorpayBtn");
     payBtn.disabled = true;
-    payBtn.innerHTML = "CONTACTING RAZORPAY GATEWAY... <span>✦</span>";
+    payBtn.innerHTML = isUpiQr
+      ? "CONFIRMING UPI QR TRANSACTION... <span>✦</span>"
+      : "CONTACTING RAZORPAY GATEWAY... <span>✦</span>";
 
     const form = e.target;
     const customer = {
@@ -1101,6 +1210,7 @@
             items: CART,
             customer,
             promoCode: APPLIED_PROMO,
+            paymentMethod,
           }),
         });
         if (createRes.ok) {
@@ -1114,12 +1224,14 @@
         orderData = {
           success: true,
           orderId: "TL-" + Date.now() + "-" + Math.random().toString(36).substring(2, 6).toUpperCase(),
-          razorpayOrderId: "sim_order_" + Math.random().toString(36).substring(2, 12),
+          razorpayOrderId: (isUpiQr ? "upi_order_" : "sim_order_") + Math.random().toString(36).substring(2, 12),
+          paymentMethod,
+          upiId: getUpiId(),
           amount: total,
           amountInPaise: Math.round(total * 100),
           currency: "INR",
           keyId: "rzp_test_simulated_mode",
-          isSimulated: true,
+          isSimulated: !isUpiQr,
           customer,
           items: [...CART],
           subtotal,
@@ -1128,6 +1240,21 @@
           total,
           createdAt: new Date().toISOString()
         };
+      }
+
+      if (isUpiQr) {
+        await verifyPaymentOnServer(
+          {
+            orderId: orderData.orderId,
+            paymentMethod: "UPI_QR",
+            upiRef,
+            razorpay_order_id: orderData.razorpayOrderId,
+          },
+          orderData
+        );
+        payBtn.disabled = false;
+        syncCheckoutPaymentMethodUI();
+        return;
       }
 
       if (CONFIG.isRazorpayConfigured && window.Razorpay) {
@@ -1156,7 +1283,7 @@
           modal: {
             ondismiss: function () {
               payBtn.disabled = false;
-              payBtn.innerHTML = `PAY SECURELY WITH RAZORPAY (${money(orderData.amount)}) <span>→</span>`;
+              syncCheckoutPaymentMethodUI(orderData.amount);
             },
           },
         };
@@ -1179,14 +1306,15 @@
             razorpay_payment_id: "sim_pay_" + Math.random().toString(36).substring(2, 10),
             razorpay_signature: "simulated_valid_signature",
           }, orderData);
+          payBtn.disabled = false;
+          syncCheckoutPaymentMethodUI();
         }, 1200);
       }
 
     } catch (err) {
       alert("Checkout notice: " + err.message);
       payBtn.disabled = false;
-      const { total } = calculateCartTotals();
-      payBtn.innerHTML = `PAY SECURELY WITH RAZORPAY (${money(total)}) <span>→</span>`;
+      syncCheckoutPaymentMethodUI();
     }
   }
 
@@ -1206,14 +1334,24 @@
       } catch (e) {}
 
       if (!confirmedOrder) {
+        const isUpiQr = payload.paymentMethod === "UPI_QR" || fallbackOrder.paymentMethod === "UPI_QR";
+        const cleanRef = typeof payload.upiRef === "string" ? payload.upiRef.trim() : "";
         confirmedOrder = {
           ...fallbackOrder,
           status: "PAID",
-          paymentDetails: {
-            paymentId: payload.razorpay_payment_id || "sim_pay_" + Math.random().toString(36).substring(2, 10),
-            verifiedAt: new Date().toISOString(),
-            method: "Razorpay (Cards / UPI / NetBanking)",
-          }
+          paymentDetails: isUpiQr
+            ? {
+                paymentId: cleanRef || "UPI-" + Math.random().toString(36).substring(2, 10).toUpperCase(),
+                utr: cleanRef || null,
+                upiId: getUpiId(),
+                verifiedAt: new Date().toISOString(),
+                method: `UPI QR (${getUpiId()})`,
+              }
+            : {
+                paymentId: payload.razorpay_payment_id || "sim_pay_" + Math.random().toString(36).substring(2, 10),
+                verifiedAt: new Date().toISOString(),
+                method: "Razorpay (Cards / UPI / NetBanking)",
+              },
         };
       }
 
@@ -1539,12 +1677,22 @@
       closeLoginModal();
       closeProfileModal();
       if (typeof closeVoiceModal === "function") closeVoiceModal();
+      const memPayModal = $("membershipPaymentModal");
+      if (memPayModal) memPayModal.classList.add("hidden");
       const memModal = $("membershipSuccessModal");
       if (memModal) memModal.classList.add("hidden");
       const infoModal = $("infoModal");
       if (infoModal) infoModal.classList.add("hidden");
       $("globalOverlay").classList.add("hidden");
     };
+
+    // Checkout Payment Method Switching & Copy UPI ID
+    document.querySelectorAll('input[name="payMethod"]').forEach((radio) => {
+      radio.addEventListener("change", () => syncCheckoutPaymentMethodUI());
+    });
+    if ($("copyUpiIdBtn")) {
+      $("copyUpiIdBtn").onclick = () => copyText(getUpiId(), "UPI ID");
+    }
 
     // Apply Promo Code
     $("applyPromoBtn").onclick = () => {
@@ -1932,9 +2080,68 @@
       }
     }
 
-    // Handle Join Buttons
+    let pendingTier = null;
+
+    function getSelectedMemMethod() {
+      const sel = document.querySelector('input[name="memPayMethod"]:checked');
+      return sel ? sel.value : "UPI_QR";
+    }
+
+    function syncMemPaymentMethodUI() {
+      if (!pendingTier) return;
+      const isUpi = getSelectedMemMethod() === "UPI_QR";
+      if ($("memOptionUpiQrCard")) $("memOptionUpiQrCard").classList.toggle("selected", isUpi);
+      if ($("memOptionRazorpayCard")) $("memOptionRazorpayCard").classList.toggle("selected", !isUpi);
+      if ($("memUpiQrPanel")) $("memUpiQrPanel").classList.toggle("hidden", !isUpi);
+
+      const confirmBtn = $("memConfirmPayBtn");
+      if (confirmBtn && !confirmBtn.disabled) {
+        confirmBtn.innerHTML = isUpi
+          ? `CONFIRM UPI PAYMENT (${money(pendingTier.price)}) &amp; ACTIVATE <span>→</span>`
+          : `PAY WITH RAZORPAY (${money(pendingTier.price)}) <span>→</span>`;
+      }
+
+      if (isUpi) {
+        const upiId = getUpiId();
+        const upiUri = buildUpiUri(pendingTier.price, `${pendingTier.tierName} Membership`);
+        if ($("memPayAmount")) $("memPayAmount").textContent = money(pendingTier.price);
+        if ($("memUpiIdText")) $("memUpiIdText").textContent = upiId;
+        if ($("memOpenUpiAppLink")) $("memOpenUpiAppLink").href = upiUri;
+        renderQrCodeInto($("memUpiQrBox"), upiUri, 152);
+      }
+    }
+
+    function openMembershipPaymentModal(tierId, tierName, price) {
+      pendingTier = { tierId, tierName, price };
+      if ($("memPayTierName")) $("memPayTierName").textContent = tierName;
+      if ($("memPayCustomerInfo")) {
+        $("memPayCustomerInfo").textContent = `${CURRENT_USER.name || "Patron"} (${CURRENT_USER.email})`;
+      }
+      if ($("memUpiRefInput")) $("memUpiRefInput").value = "";
+      if ($("memMethodUpiQr")) $("memMethodUpiQr").checked = true;
+      syncMemPaymentMethodUI();
+      $("globalOverlay").classList.remove("hidden");
+      $("membershipPaymentModal").classList.remove("hidden");
+    }
+
+    function closeMembershipPaymentModal() {
+      if ($("membershipPaymentModal")) $("membershipPaymentModal").classList.add("hidden");
+      checkAndHideOverlay();
+    }
+
+    document.querySelectorAll('input[name="memPayMethod"]').forEach((radio) => {
+      radio.addEventListener("change", syncMemPaymentMethodUI);
+    });
+    if ($("memCopyUpiIdBtn")) {
+      $("memCopyUpiIdBtn").onclick = () => copyText(getUpiId(), "UPI ID");
+    }
+    if ($("membershipPayModalClose")) {
+      $("membershipPayModalClose").onclick = closeMembershipPaymentModal;
+    }
+
+    // Handle Join Buttons -> Open Membership Payment Modal (UPI QR & Razorpay)
     document.querySelectorAll(".join-tier-btn").forEach((btn) => {
-      btn.onclick = async () => {
+      btn.onclick = () => {
         const tierId = btn.getAttribute("data-tier-id");
         const tierName = btn.getAttribute("data-tier-name");
         const price = Number(btn.getAttribute("data-price"));
@@ -1946,8 +2153,21 @@
           return;
         }
 
-        btn.disabled = true;
-        btn.textContent = "INITIALIZING SECURE GATEWAY...";
+        openMembershipPaymentModal(tierId, tierName, price);
+      };
+    });
+
+    if ($("memConfirmPayBtn")) {
+      $("memConfirmPayBtn").onclick = async () => {
+        if (!pendingTier || !CURRENT_USER) return;
+        const { tierId, tierName } = pendingTier;
+        const paymentMethod = getSelectedMemMethod();
+        const isUpiQr = paymentMethod === "UPI_QR";
+        const upiRef = $("memUpiRefInput") ? $("memUpiRefInput").value.trim() : "";
+
+        const confirmBtn = $("memConfirmPayBtn");
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = isUpiQr ? "VERIFYING UPI PAYMENT..." : "INITIALIZING SECURE GATEWAY...";
 
         try {
           const orderRes = await fetch(`${API_BASE}/api/membership/create-order`, {
@@ -1955,6 +2175,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               tierId,
+              paymentMethod,
               customer: {
                 name: CURRENT_USER.name || "Distinguished Patron",
                 email: CURRENT_USER.email,
@@ -1970,8 +2191,18 @@
 
           const orderData = await orderRes.json();
 
-          // Check if Razorpay SDK is loaded and credentials are set
-          if (window.Razorpay && !orderData.isSimulated && CONFIG.isRazorpayConfigured) {
+          if (isUpiQr) {
+            await verifyMembershipPayment(
+              orderData.membershipOrderId,
+              {
+                paymentMethod: "UPI_QR",
+                upiRef,
+                razorpay_order_id: orderData.razorpayOrderId,
+              },
+              tierName
+            );
+            closeMembershipPaymentModal();
+          } else if (window.Razorpay && !orderData.isSimulated && CONFIG.isRazorpayConfigured) {
             const rzpOptions = {
               key: orderData.keyId,
               amount: orderData.amountInPaise,
@@ -1987,13 +2218,13 @@
               theme: { color: "#c8a97e" },
               handler: async function (response) {
                 await verifyMembershipPayment(orderData.membershipOrderId, response, tierName);
+                closeMembershipPaymentModal();
               },
             };
 
             const rzp = new window.Razorpay(rzpOptions);
             rzp.open();
           } else {
-            // Simulated Luxury Sandbox Mode
             showNotification("Invoking Secure Razorpay Sandbox Gateway...");
             setTimeout(async () => {
               const simulatedResponse = {
@@ -2002,16 +2233,17 @@
                 razorpay_signature: "sim_sig_verified",
               };
               await verifyMembershipPayment(orderData.membershipOrderId, simulatedResponse, tierName);
+              closeMembershipPaymentModal();
             }, 1200);
           }
         } catch (err) {
           alert("Membership Enrollment: " + err.message);
         } finally {
-          btn.disabled = false;
-          btn.innerHTML = `JOIN ${tierName.toUpperCase()} — ₹${price.toLocaleString("en-IN")} <span>→</span>`;
+          confirmBtn.disabled = false;
+          syncMemPaymentMethodUI();
         }
       };
-    });
+    }
 
     async function verifyMembershipPayment(membershipOrderId, paymentResponse, tierName) {
       try {
@@ -2020,6 +2252,8 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             membershipOrderId,
+            paymentMethod: paymentResponse.paymentMethod || "RAZORPAY",
+            upiRef: paymentResponse.upiRef || "",
             razorpay_order_id: paymentResponse.razorpay_order_id,
             razorpay_payment_id: paymentResponse.razorpay_payment_id,
             razorpay_signature: paymentResponse.razorpay_signature,

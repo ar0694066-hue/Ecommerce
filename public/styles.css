@@ -1868,11 +1868,30 @@ h1 em, h2 em, h3 em {
   margin-top: 28px;
 }
 
+.payment-method-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
 .payment-option {
-  border: 1px solid var(--color-gold);
+  display: block;
+  border: 1px solid var(--color-border);
   background: var(--color-chalk);
-  padding: 18px;
-  margin-bottom: 20px;
+  padding: 16px 18px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.payment-option:hover {
+  border-color: var(--color-sand);
+}
+
+.payment-option.selected {
+  border: 1px solid var(--color-gold);
+  background: #fdfbf7;
+  box-shadow: 0 6px 18px rgba(197, 168, 128, 0.12);
 }
 
 .option-header {
@@ -1881,13 +1900,18 @@ h1 em, h2 em, h3 em {
   gap: 12px;
 }
 
-.option-header label strong {
+.option-header input[type="radio"] {
+  margin-top: 4px;
+  accent-color: var(--color-pitch);
+}
+
+.option-header strong {
   display: block;
   font-size: 0.88rem;
   color: var(--color-pitch);
 }
 
-.option-header label span {
+.option-header span {
   font-size: 0.72rem;
   color: var(--color-muted);
 }
@@ -1898,6 +1922,210 @@ h1 em, h2 em, h3 em {
   margin-top: 10px;
   padding-top: 10px;
   border-top: 1px solid var(--color-border);
+}
+
+/* Direct UPI QR Payment Panel */
+.upi-qr-panel {
+  margin-bottom: 20px;
+}
+
+.upi-qr-card {
+  background: linear-gradient(145deg, #141414 0%, #090909 100%);
+  color: var(--color-chalk);
+  border: 1px solid var(--color-gold);
+  padding: 20px;
+}
+
+.upi-qr-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(197, 168, 128, 0.25);
+  margin-bottom: 16px;
+}
+
+.upi-qr-eyebrow {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-gold);
+  margin-bottom: 4px;
+}
+
+.upi-qr-payee {
+  font-size: 0.78rem;
+  color: var(--color-sand);
+}
+
+.upi-qr-amount-badge {
+  text-align: right;
+}
+
+.upi-qr-amount-badge span {
+  display: block;
+  font-size: 0.56rem;
+  letter-spacing: 0.2em;
+  color: var(--color-taupe);
+}
+
+.upi-qr-amount-badge strong {
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  color: var(--color-gold);
+}
+
+.upi-qr-body {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.upi-qr-frame {
+  width: 164px;
+  height: 164px;
+  flex-shrink: 0;
+  background: #ffffff;
+  padding: 8px;
+  border: 2px solid var(--color-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.upi-qr-frame svg,
+.upi-qr-frame canvas,
+.upi-qr-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.upi-qr-details {
+  flex: 1;
+  min-width: 210px;
+}
+
+.upi-id-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  padding: 7px 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.upi-id-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: var(--color-gold);
+  font-weight: 700;
+}
+
+.upi-id-pill code {
+  font-family: "Courier New", monospace;
+  font-size: 0.82rem;
+  color: var(--color-chalk);
+  flex: 1;
+  word-break: break-all;
+}
+
+.upi-copy-btn {
+  background: var(--color-gold);
+  color: var(--color-pitch);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 4px 10px;
+}
+
+.upi-copy-btn:hover {
+  background: var(--color-chalk);
+}
+
+.upi-qr-instructions {
+  font-size: 0.72rem;
+  color: var(--color-sand);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.upi-apps-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.upi-apps-strip span {
+  font-size: 0.6rem;
+  letter-spacing: 0.08em;
+  padding: 3px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: var(--color-sand);
+}
+
+.upi-app-link {
+  display: inline-block;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--color-gold);
+  border-bottom: 1px solid var(--color-gold);
+  padding-bottom: 2px;
+}
+
+.upi-app-link:hover {
+  color: var(--color-chalk);
+  border-color: var(--color-chalk);
+}
+
+.upi-ref-group {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.upi-ref-group label {
+  display: block;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  color: var(--color-sand);
+  margin-bottom: 6px;
+}
+
+.upi-ref-group input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(197, 168, 128, 0.35);
+  color: var(--color-chalk);
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  outline: none;
+}
+
+.upi-ref-group input:focus {
+  border-color: var(--color-gold);
+}
+
+.upi-ref-group input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.membership-pay-modal-card {
+  max-width: 620px;
+  padding: 40px;
+}
+
+.mem-pay-sub {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  margin-top: 6px;
 }
 
 .checkout-actions {

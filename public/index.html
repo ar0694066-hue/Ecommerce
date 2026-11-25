@@ -761,25 +761,83 @@
               </div>
             </div>
 
-            <h3 class="payment-section-heading">2. Payment Method — Razorpay India</h3>
+            <h3 class="payment-section-heading">2. Payment Method — UPI QR &amp; Razorpay India</h3>
             <div class="payment-method-selector">
-              <div class="payment-option selected">
+              <label class="payment-option selected" for="methodUpiQr" id="optionUpiQrCard">
                 <div class="option-header">
-                  <input type="radio" checked name="payMethod" id="methodRazorpay">
-                  <label for="methodRazorpay">
-                    <strong>Razorpay Instant Gateway</strong>
-                    <span>Instant UPI, Cards (Visa, Master, Amex, RuPay), NetBanking, UPI QR</span>
-                  </label>
+                  <input type="radio" checked name="payMethod" id="methodUpiQr" value="UPI_QR">
+                  <div>
+                    <strong>Direct UPI QR Code (Scan &amp; Pay)</strong>
+                    <span>Instant zero-fee transfer via GPay, PhonePe, Paytm, BHIM or iMobile</span>
+                  </div>
                 </div>
                 <div class="payment-option-logos">
-                  <span>UPI / QR</span> · <span>Credit & Debit Cards</span> · <span>NetBanking (50+ Banks)</span>
+                  <span>UPI ID: <strong>ar0694066-1@okicic</strong></span> · <span>Instant QR Verification</span>
+                </div>
+              </label>
+
+              <label class="payment-option" for="methodRazorpay" id="optionRazorpayCard">
+                <div class="option-header">
+                  <input type="radio" name="payMethod" id="methodRazorpay" value="RAZORPAY">
+                  <div>
+                    <strong>Razorpay Instant Gateway</strong>
+                    <span>Cards (Visa, Master, Amex, RuPay), NetBanking (50+ Banks) &amp; Wallets</span>
+                  </div>
+                </div>
+                <div class="payment-option-logos">
+                  <span>Credit &amp; Debit Cards</span> · <span>NetBanking (50+ Banks)</span> · <span>256-Bit Secured</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Live UPI QR Code Payment Panel -->
+            <div class="upi-qr-panel" id="upiQrPanel">
+              <div class="upi-qr-card">
+                <div class="upi-qr-top">
+                  <div>
+                    <span class="upi-qr-eyebrow">SCAN TO PAY INSTANTLY</span>
+                    <p class="upi-qr-payee">Payee: <strong>THREADLINE ATELIER</strong></p>
+                  </div>
+                  <div class="upi-qr-amount-badge">
+                    <span>AMOUNT</span>
+                    <strong id="upiQrAmount">₹0</strong>
+                  </div>
+                </div>
+
+                <div class="upi-qr-body">
+                  <div class="upi-qr-frame" id="checkoutUpiQrBox" aria-label="UPI Payment QR Code">
+                    <!-- QR SVG rendered dynamically -->
+                  </div>
+                  <div class="upi-qr-details">
+                    <div class="upi-id-pill">
+                      <span class="upi-id-label">UPI ID</span>
+                      <code id="upiQrIdText">ar0694066-1@okicic</code>
+                      <button type="button" class="upi-copy-btn" id="copyUpiIdBtn">COPY</button>
+                    </div>
+                    <p class="upi-qr-instructions">
+                      Open any UPI app, scan the QR code, and complete payment for the exact order amount shown above.
+                    </p>
+                    <div class="upi-apps-strip">
+                      <span>GPay</span>
+                      <span>PhonePe</span>
+                      <span>Paytm</span>
+                      <span>BHIM</span>
+                      <span>iMobile</span>
+                    </div>
+                    <a class="upi-app-link" id="openUpiAppLink" href="#">OPEN IN UPI APP ↗</a>
+                  </div>
+                </div>
+
+                <div class="upi-ref-group">
+                  <label for="upiRefInput">UPI Transaction / UTR Reference Number (Optional)</label>
+                  <input type="text" id="upiRefInput" name="upiRef" placeholder="e.g. 432918562014 (12-digit UTR after scanning)">
                 </div>
               </div>
             </div>
 
             <div class="checkout-actions">
               <button type="submit" class="luxury-btn btn-gold full-width" id="payWithRazorpayBtn">
-                PAY SECURELY WITH RAZORPAY (<span id="payBtnAmount">₹0</span>) <span>→</span>
+                CONFIRM UPI PAYMENT &amp; PLACE ORDER (<span id="payBtnAmount">₹0</span>) <span>→</span>
               </button>
             </div>
             <p class="payment-notice-text">
@@ -1005,6 +1063,78 @@
   </div>
 
 
+  <!-- Membership Payment Modal (UPI QR & Razorpay) -->
+  <div class="luxury-modal hidden" id="membershipPaymentModal">
+    <div class="modal-card membership-pay-modal-card">
+      <button class="modal-close-btn" id="membershipPayModalClose" type="button">✕</button>
+      <div class="checkout-header">
+        <span class="section-eyebrow gold">L'ATELIER PRIVÉ ENROLLMENT</span>
+        <h2 class="checkout-title" id="memPayTierName">Atelier Membership</h2>
+        <p class="mem-pay-sub">Complete enrollment for <strong id="memPayCustomerInfo">Patron</strong></p>
+      </div>
+
+      <div class="payment-method-selector mem-pay-methods">
+        <label class="payment-option selected" for="memMethodUpiQr" id="memOptionUpiQrCard">
+          <div class="option-header">
+            <input type="radio" checked name="memPayMethod" id="memMethodUpiQr" value="UPI_QR">
+            <div>
+              <strong>Direct UPI QR Code (ar0694066-1@okicic)</strong>
+              <span>Scan &amp; pay instantly via any UPI app</span>
+            </div>
+          </div>
+        </label>
+        <label class="payment-option" for="memMethodRazorpay" id="memOptionRazorpayCard">
+          <div class="option-header">
+            <input type="radio" name="memPayMethod" id="memMethodRazorpay" value="RAZORPAY">
+            <div>
+              <strong>Razorpay Instant Gateway</strong>
+              <span>Cards, NetBanking &amp; Wallets</span>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <div class="upi-qr-panel" id="memUpiQrPanel">
+        <div class="upi-qr-card">
+          <div class="upi-qr-top">
+            <div>
+              <span class="upi-qr-eyebrow">MEMBERSHIP UPI QR</span>
+              <p class="upi-qr-payee">Payee: <strong>THREADLINE ATELIER</strong></p>
+            </div>
+            <div class="upi-qr-amount-badge">
+              <span>ANNUAL FEE</span>
+              <strong id="memPayAmount">₹0</strong>
+            </div>
+          </div>
+          <div class="upi-qr-body">
+            <div class="upi-qr-frame" id="memUpiQrBox" aria-label="Membership UPI QR Code"></div>
+            <div class="upi-qr-details">
+              <div class="upi-id-pill">
+                <span class="upi-id-label">UPI ID</span>
+                <code id="memUpiIdText">ar0694066-1@okicic</code>
+                <button type="button" class="upi-copy-btn" id="memCopyUpiIdBtn">COPY</button>
+              </div>
+              <p class="upi-qr-instructions">
+                Scan with GPay, PhonePe, Paytm, BHIM, or iMobile to activate your annual sartorial privilege immediately.
+              </p>
+              <a class="upi-app-link" id="memOpenUpiAppLink" href="#">OPEN IN UPI APP ↗</a>
+            </div>
+          </div>
+          <div class="upi-ref-group">
+            <label for="memUpiRefInput">UPI Transaction / UTR Reference Number (Optional)</label>
+            <input type="text" id="memUpiRefInput" placeholder="e.g. 432918562014 (12-digit UTR)">
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-actions">
+        <button type="button" class="luxury-btn btn-gold full-width" id="memConfirmPayBtn">
+          CONFIRM UPI PAYMENT &amp; ACTIVATE MEMBERSHIP <span>→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Membership Welcome & Certificate Modal -->
   <div class="luxury-modal hidden" id="membershipSuccessModal">
     <div class="modal-card membership-success-card">
@@ -1034,6 +1164,7 @@
   </div>
 
   <!-- Core Application Scripts -->
+  <script src="vendor/qrcode.browser.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

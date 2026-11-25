@@ -29,6 +29,19 @@ app.use(express.static(path.join(__dirname, "public")));
 const PORT = process.env.PORT || 3000;
 const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || "";
 const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || "";
+const UPI_ID = process.env.UPI_ID || "ar0694066-1@okicic";
+const UPI_PAYEE_NAME = process.env.UPI_PAYEE_NAME || "THREADLINE ATELIER";
+
+function buildUpiUri(amount, note) {
+  const params = new URLSearchParams({
+    pa: UPI_ID,
+    pn: UPI_PAYEE_NAME,
+    am: Number(amount || 0).toFixed(2),
+    cu: "INR",
+    tn: note || "THREADLINE ATELIER Order",
+  });
+  return `upi://pay?${params.toString()}`;
+}
 
 // Load Catalog
 const productsFilePath = path.join(__dirname, "data", "products.json");
@@ -104,6 +117,8 @@ app.get("/api/config", (req, res) => {
     brandName: "THREADLINE ATELIER",
     currency: "INR",
     currencySymbol: "₹",
+    upiId: UPI_ID,
+    upiPayeeName: UPI_PAYEE_NAME,
     isRazorpayConfigured,
     razorpayKeyId: isRazorpayConfigured ? RAZORPAY_KEY_ID : null,
     mode: isRazorpayConfigured ? (RAZORPAY_KEY_ID.startsWith("rzp_live") ? "live" : "test") : "simulation",
@@ -166,10 +181,11 @@ app.get("/api/products/:id", (req, res) => {
   res.json(product);
 });
 
-// API: Create Razorpay Order
+// API: Create Razorpay or UPI QR Order
 app.post("/api/razorpay/create-order", async (req, res) => {
   try {
-    const { items, customer, promoCode } = req.body;
+    const { items, customer, promoCode, paymentMethod } = req.body;
+    const isUpiQr = paymentMethod === "UPI_QR";
 
     if (!Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: "Your bag is empty." });
@@ -230,9 +246,9 @@ app.post("/api/razorpay/create-order", async (req, res) => {
     const orderId =
       "TL-" + Date.now() + "-" + crypto.randomBytes(3).toString("hex").toUpperCase();
 
-    let razorpayOrderId = "sim_order_" + crypto.randomBytes(8).toString("hex");
+    let razorpayOrderId = (isUpiQr ? "upi_order_" : "sim_order_") + crypto.randomBytes(8).toString("hex");
 
-    if (isRazorpayConfigured && razorpayInstance) {
+    if (!isUpiQr && isRazorpayConfigured && razorpayInstance) {
       const options = {
         amount: Math.round(finalAmount * 100), // amount in paise
         currency: "INR",
@@ -248,9 +264,14 @@ app.post("/api/razorpay/create-order", async (req, res) => {
       razorpayOrderId = rzpOrder.id;
     }
 
+    const upiUri = buildUpiUri(finalAmount, `Order ${orderId}`);
+
     const orderRecord = {
       id: orderId,
       razorpayOrderId,
+      paymentMethod: isUpiQr ? "UPI_QR" : "RAZORPAY",
+      upiId: isUpiQr ? UPI_ID : null,
+      upiUri: isUpiQr ? upiUri : null,
       subtotal,
       discount,
       shipping,
@@ -261,7 +282,7 @@ app.post("/api/razorpay/create-order", async (req, res) => {
       promoCode: promoCode || null,
       status: "PENDING",
       createdAt: new Date().toISOString(),
-      isSimulated: !isRazorpayConfigured,
+      isSimulated: isUpiQr ? false : !isRazorpayConfigured,
     };
 
     saveOrder(orderRecord);
@@ -270,11 +291,15 @@ app.post("/api/razorpay/create-order", async (req, res) => {
       success: true,
       orderId,
       razorpayOrderId,
+      paymentMethod: orderRecord.paymentMethod,
+      upiId: UPI_ID,
+      upiPayeeName: UPI_PAYEE_NAME,
+      upiUri,
       amount: finalAmount,
       amountInPaise: Math.round(finalAmount * 100),
       currency: "INR",
       keyId: isRazorpayConfigured ? RAZORPAY_KEY_ID : "rzp_test_simulated_mode",
-      isSimulated: !isRazorpayConfigured,
+      isSimulated: orderRecord.isSimulated,
       customer,
     });
   } catch (err) {
@@ -283,11 +308,13 @@ app.post("/api/razorpay/create-order", async (req, res) => {
   }
 });
 
-// API: Verify Razorpay Payment Signature
+// API: Verify Razorpay or UPI QR Payment
 app.post("/api/razorpay/verify-payment", async (req, res) => {
   try {
     const {
       orderId,
+      paymentMethod,
+      upiRef,
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
@@ -304,7 +331,9 @@ app.post("/api/razorpay/verify-payment", async (req, res) => {
       return res.json({ success: true, message: "Order already confirmed.", order });
     }
 
-    if (isRazorpayConfigured && RAZORPAY_KEY_SECRET) {
+    const isUpiQr = paymentMethod === "UPI_QR" || order.paymentMethod === "UPI_QR";
+
+    if (!isUpiQr && isRazorpayConfigured && RAZORPAY_KEY_SECRET) {
       // Cryptographic verification
       const body = razorpay_order_id + "|" + razorpay_payment_id;
       const expectedSignature = crypto
@@ -322,12 +351,21 @@ app.post("/api/razorpay/verify-payment", async (req, res) => {
     }
 
     // Payment successfully confirmed
+    const cleanUpiRef = typeof upiRef === "string" ? upiRef.trim() : "";
     order.status = "PAID";
-    order.paymentDetails = {
-      paymentId: razorpay_payment_id || "sim_pay_" + crypto.randomBytes(6).toString("hex"),
-      verifiedAt: new Date().toISOString(),
-      method: "Razorpay (Cards / UPI / NetBanking)",
-    };
+    order.paymentDetails = isUpiQr
+      ? {
+          paymentId: cleanUpiRef || "UPI-" + crypto.randomBytes(5).toString("hex").toUpperCase(),
+          utr: cleanUpiRef || null,
+          upiId: UPI_ID,
+          verifiedAt: new Date().toISOString(),
+          method: `UPI QR (${UPI_ID})`,
+        }
+      : {
+          paymentId: razorpay_payment_id || "sim_pay_" + crypto.randomBytes(6).toString("hex"),
+          verifiedAt: new Date().toISOString(),
+          method: "Razorpay (Cards / UPI / NetBanking)",
+        };
 
     saveOrder(order);
 
@@ -471,10 +509,11 @@ app.get("/api/membership/status", (req, res) => {
   res.json({ hasMembership: false });
 });
 
-// API: Create Razorpay Order for Membership
+// API: Create Razorpay or UPI QR Order for Membership
 app.post("/api/membership/create-order", async (req, res) => {
   try {
-    const { tierId, customer } = req.body;
+    const { tierId, customer, paymentMethod } = req.body;
+    const isUpiQr = paymentMethod === "UPI_QR";
     const tier = MEMBERSHIP_TIERS[tierId];
     if (!tier) {
       return res.status(400).json({ error: "Invalid membership tier chosen." });
@@ -489,9 +528,9 @@ app.post("/api/membership/create-order", async (req, res) => {
     const membershipOrderId =
       "VIP-" + Date.now() + "-" + crypto.randomBytes(3).toString("hex").toUpperCase();
 
-    let razorpayOrderId = "sim_vip_" + crypto.randomBytes(8).toString("hex");
+    let razorpayOrderId = (isUpiQr ? "upi_vip_" : "sim_vip_") + crypto.randomBytes(8).toString("hex");
 
-    if (isRazorpayConfigured && razorpayInstance) {
+    if (!isUpiQr && isRazorpayConfigured && razorpayInstance) {
       const options = {
         amount: Math.round(tier.price * 100), // amount in paise
         currency: "INR",
@@ -508,9 +547,14 @@ app.post("/api/membership/create-order", async (req, res) => {
       razorpayOrderId = rzpOrder.id;
     }
 
+    const upiUri = buildUpiUri(tier.price, `${tier.name} Membership`);
+
     const membershipRecord = {
       id: membershipOrderId,
       razorpayOrderId,
+      paymentMethod: isUpiQr ? "UPI_QR" : "RAZORPAY",
+      upiId: isUpiQr ? UPI_ID : null,
+      upiUri: isUpiQr ? upiUri : null,
       tierId: tier.id,
       tierName: tier.name,
       price: tier.price,
@@ -518,7 +562,7 @@ app.post("/api/membership/create-order", async (req, res) => {
       customer,
       status: "PENDING",
       createdAt: new Date().toISOString(),
-      isSimulated: !isRazorpayConfigured,
+      isSimulated: isUpiQr ? false : !isRazorpayConfigured,
     };
 
     saveMembership(membershipRecord);
@@ -527,11 +571,15 @@ app.post("/api/membership/create-order", async (req, res) => {
       success: true,
       membershipOrderId,
       razorpayOrderId,
+      paymentMethod: membershipRecord.paymentMethod,
+      upiId: UPI_ID,
+      upiPayeeName: UPI_PAYEE_NAME,
+      upiUri,
       amount: tier.price,
       amountInPaise: Math.round(tier.price * 100),
       currency: "INR",
       keyId: isRazorpayConfigured ? RAZORPAY_KEY_ID : "rzp_test_simulated_mode",
-      isSimulated: !isRazorpayConfigured,
+      isSimulated: membershipRecord.isSimulated,
       tier,
       customer,
     });
@@ -541,11 +589,13 @@ app.post("/api/membership/create-order", async (req, res) => {
   }
 });
 
-// API: Verify Razorpay Payment for Membership
+// API: Verify Razorpay or UPI QR Payment for Membership
 app.post("/api/membership/verify-payment", async (req, res) => {
   try {
     const {
       membershipOrderId,
+      paymentMethod,
+      upiRef,
       razorpay_order_id,
       razorpay_payment_id,
       razorpay_signature,
@@ -562,7 +612,9 @@ app.post("/api/membership/verify-payment", async (req, res) => {
       return res.json({ success: true, message: "Membership already active.", membership: record });
     }
 
-    if (isRazorpayConfigured && RAZORPAY_KEY_SECRET) {
+    const isUpiQr = paymentMethod === "UPI_QR" || record.paymentMethod === "UPI_QR";
+
+    if (!isUpiQr && isRazorpayConfigured && RAZORPAY_KEY_SECRET) {
       const body = razorpay_order_id + "|" + razorpay_payment_id;
       const expectedSignature = crypto
         .createHmac("sha256", RAZORPAY_KEY_SECRET)
@@ -581,15 +633,24 @@ app.post("/api/membership/verify-payment", async (req, res) => {
     // Activate membership for 1 year
     const now = new Date();
     const validUntil = new Date(now.setFullYear(now.getFullYear() + 1)).toISOString();
+    const cleanUpiRef = typeof upiRef === "string" ? upiRef.trim() : "";
 
     record.status = "ACTIVE";
     record.activatedAt = new Date().toISOString();
     record.validUntil = validUntil;
-    record.paymentDetails = {
-      paymentId: razorpay_payment_id || "sim_pay_vip_" + crypto.randomBytes(6).toString("hex"),
-      verifiedAt: new Date().toISOString(),
-      method: "Razorpay Secure Membership Gateway",
-    };
+    record.paymentDetails = isUpiQr
+      ? {
+          paymentId: cleanUpiRef || "UPI-VIP-" + crypto.randomBytes(5).toString("hex").toUpperCase(),
+          utr: cleanUpiRef || null,
+          upiId: UPI_ID,
+          verifiedAt: new Date().toISOString(),
+          method: `UPI QR (${UPI_ID})`,
+        }
+      : {
+          paymentId: razorpay_payment_id || "sim_pay_vip_" + crypto.randomBytes(6).toString("hex"),
+          verifiedAt: new Date().toISOString(),
+          method: "Razorpay Secure Membership Gateway",
+        };
 
     saveMembership(record);
 
